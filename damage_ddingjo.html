@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Damage Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .input-group {
+            margin-bottom: 10px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .results, .input-fields {
+            background: #f9f9f9;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .results h2 {
+            margin-top: 0;
+        }
+        button {
+            padding: 10px 20px;
+            background: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+    <h1>Damage Calculator</h1>
+    <div class="container">
+        <div class="input-fields">
+            <div class="input-group">
+                <label for="baseAtk">현재공격력:</label>
+                <input type="number" id="baseAtk" step="0.1">
+            </div>
+            <div class="input-group">
+                <label for="critRate">크리티컬 (%):</label>
+                <input type="number" id="critRate" step="0.1">
+            </div>
+            <div class="input-group">
+                <label for="critDmg">크리티컬 피해 (%):</label>
+                <input type="number" id="critDmg" step="0.1">
+            </div>
+            <div class="input-group">
+                <label for="skillBonus">공명/일반/강공/해방 피해 보너스 (%):</label>
+                <input type="number" id="skillBonus" step="0.1">
+            </div>
+            <div class="input-group">
+                <label for="elemBonus">속성 피해 보너스 (%):</label>
+                <input type="number" id="elemBonus" step="0.1">
+            </div>
+            <div class="input-group">
+                <label for="currentBaseAtk">기초공격력:</label>
+                <input type="number" id="currentBaseAtk" step="0.1">
+            </div>
+            <div class="input-group">
+                <label for="weaponCritRate">무기 크리티컬 (없으면 0):</label>
+                <input type="number" id="weaponCritRate" step="0.1">
+            </div>
+            <div class="input-group">
+                <label for="weaponCritDmg">무기 크리티컬 피해 (없으면 0):</label>
+                <input type="number" id="weaponCritDmg" step="0.1">
+            </div>
+            <div class="input-group">
+                <label for="weaponAtkPercent">무기 공격력 퍼센트 (없으면 0):</label>
+                <input type="number" id="weaponAtkPercent" step="0.1">
+            </div>
+            <div class="input-group">
+                <label for="attackType">일반공격(1)/강공격(2)/공명스킬(3)/공명해방(4) 중 하나:</label>
+                <input type="number" id="attackType" step="1" min="1" max="4">
+            </div>
+            <button onclick="calculate()">결과 계산</button>
+        </div>
+        <div class="results">
+            <h2>결과</h2>
+            <p id="totalAtk"></p>
+            <p id="damage"></p>
+            <p id="optimalDamage"></p>
+            <p id="optimalCombination"></p>
+        </div>
+    </div>
+
+    <script>
+        function calculateDamage(baseAtk, atkPercent, flatAtk, elemBonus, skillBonus, critRate, critDmg) {
+            const totalAtk = baseAtk * (1 + atkPercent) + flatAtk;
+            return totalAtk * (1 + elemBonus + skillBonus) * (critRate * critDmg + 1 - critRate) / 2;
+        }
+
+        function calculate() {
+            const baseAtk = parseFloat(document.getElementById('baseAtk').value);
+            const critRate = parseFloat(document.getElementById('critRate').value) / 100;
+            const critDmg = parseFloat(document.getElementById('critDmg').value) / 100;
+            const skillBonus = parseFloat(document.getElementById('skillBonus').value) / 100;
+            const elemBonus = parseFloat(document.getElementById('elemBonus').value) / 100;
+            const currentBaseAtk = parseFloat(document.getElementById('currentBaseAtk').value);
+            const weaponCritRate = parseFloat(document.getElementById('weaponCritRate').value) / 100;
+            const weaponCritDmg = parseFloat(document.getElementById('weaponCritDmg').value) / 100;
+            const weaponAtkPercent = parseFloat(document.getElementById('weaponAtkPercent').value) / 100;
+            const attackType = parseInt(document.getElementById('attackType').value);
+
+            const totalAtk = baseAtk * (1 + 0) + 0;
+            const nowDamage = calculateDamage(baseAtk, 0, 0, elemBonus, skillBonus, critRate, critDmg);
+
+            const attackBonusTypes = ["일반공격", "강공격", "공명스킬", "공명해방"];
+            const selectedAttackBonus = attackBonusTypes[attackType - 1];
+
+            let atkPercent = weaponAtkPercent + 0.54;
+            let flatAtk = 350;
+            let currentCritRate = weaponCritRate + 0.05;
+            let currentCritDmg = weaponCritDmg + 1.5;
+            let currentElemBonus = 0.4;
+            let currentSkillBonus = 0;
+            let energyRecharge = 1.0;
+
+            const subOptions = {
+                "깡공": 70,
+                "공퍼": 0.116,
+                "치확": 0.105,
+                "치피": 0.21,
+                "기능피증": 0.116
+            };
+
+            let maxDamage = 0;
+            let bestCombination = {};
+            const setSelection = 1;
+
+            for (let subOptionCount = 1; subOptionCount < 25; subOptionCount++) {
+                for (let i = 0; i < 20000; i++) {
+                    let tempFlatAtk = flatAtk;
+                    let tempAtkPercent = atkPercent;
+                    let tempCritRate = currentCritRate;
+                    let tempCritDmg = currentCritDmg;
+                    let tempElemBonus = currentElemBonus;
+                    let tempSkillBonus = 0;
+                    let tempEnergyRecharge = energyRecharge;
+
+                    const co4Options = ["공퍼", "치확", "치피"];
+                    const co3Options = ["공퍼", "속성피증", "공명효율"];
+                    let selectedCo4 = null;
+                    let selectedCo3 = [];
+
+                    if (setSelection === 1) {
+                        selectedCo4 = co4Options[Math.floor(Math.random() * co4Options.length)];
+                        if (selectedCo4 === "공퍼") {
+                            tempAtkPercent += 0.33;
+                        } else if (selectedCo4 === "치확") {
+                            tempCritRate += 0.22;
+                        } else if (selectedCo4 === "치피") {
+                            tempCritDmg += 0.44;
+                        }
+
+                        for (let j = 0; j < 2; j++) {
+                            const selectedCo3Option = co3Options[Math.floor(Math.random() * co3Options.length)];
+                            if (selectedCo3Option === "공퍼") {
+                                tempAtkPercent += 0.3;
+                            } else if (selectedCo3Option === "속성피증") {
+                                tempElemBonus += 0.3;
+                            } else if (selectedCo3Option === "공명효율") {
+                                tempEnergyRecharge += 0.32;
+                            }
+                            selectedCo3.push(selectedCo3Option);
+                        }
+                    } else if (setSelection === 2) {
+                        for (let j = 0; j < 2; j++) {
+                            const selectedCo4Option = co4Options[Math.floor(Math.random() * co4Options.length)];
+                            if (selectedCo4Option === "공퍼") {
+                                tempAtkPercent += 0.33;
+                            } else if (selectedCo4Option === "치확") {
+                                tempCritRate += 0.22;
+                            } else if (selectedCo4Option === "치피") {
+                                tempCritDmg += 0.44;
+                            }
+                            selectedCo3.push(selectedCo4Option);
+                        }
+                    }
+
+                    const subOptionCounts = { "깡공": 0, "공퍼": 0, "치확": 0, "치피": 0, "기능피증": 0 };
+
+                    while (Object.values(subOptionCounts).reduce((a, b) => a + b, 0) < subOptionCount) {
+                        const subOptionChoice = Object.keys(subOptions)[Math.floor(Math.random() * Object.keys(subOptions).length)];
+                        if (subOptionCounts[subOptionChoice] < 5) {
+                            subOptionCounts[subOptionChoice]++;
+                        }
+                    }
+
+                    for (const [opt, count] of Object.entries(subOptionCounts)) {
+                        if (opt === "깡공") {
+                            tempFlatAtk += subOptions[opt] * count;
+                        } else if (opt === "공퍼") {
+                            tempAtkPercent += subOptions[opt] * count;
+                        } else if (opt === "치확") {
+                            tempCritRate += subOptions[opt] * count;
+                        } else if (opt === "치피") {
+                            tempCritDmg += subOptions[opt] * count;
+                        } else if (opt === "기능피증") {
+                            if (selectedAttackBonus === "일반공격") {
+                                tempSkillBonus += 0.124 * count;
+                            } else {
+                                tempSkillBonus += subOptions[opt] * count;
+                            }
+                        }
+                    }
+
+                    const damage = calculateDamage(currentBaseAtk, tempAtkPercent, tempFlatAtk, tempElemBonus, tempSkillBonus, tempCritRate, tempCritDmg);
+
+                    if (damage > maxDamage) {
+                        maxDamage = damage;
+                        bestCombination = {
+                            "4코옵션": setSelection === 1 ? selectedCo4 : `${selectedCo4} 2개`,
+                            "3코옵션": selectedCo3,
+                            "부옵션": subOptionCounts,
+                            "기초공": currentBaseAtk,
+                            "공격력": Math.floor(currentBaseAtk * (1 + tempAtkPercent) + tempFlatAtk),
+                            "치확": tempCritRate,
+                            "치피": tempCritDmg,
+                            "속성피증": tempElemBonus,
+                            "기능피증": tempSkillBonus,
+                            "공명효율": tempEnergyRecharge,
+                            "부옵개수": subOptionCount
+                        };
+                    }
+                }
+                if (maxDamage > nowDamage) {
+                    break;
+                }
+            }
+
+            document.getElementById('totalAtk').innerText = `공격력: ${Math.floor(totalAtk)}`;
+            document.getElementById('damage').innerText = `현재 데미지: ${Math.floor(nowDamage)}`;
+            document.getElementById('optimalDamage').innerText = `최적 부옵(${bestCombination["부옵개수"]}개) 시 데미지: ${Math.floor(maxDamage)}`;
+            document.getElementById('optimalCombination').innerHTML = `
+                최적 부옵 조합:<br>
+                4코옵션: ${bestCombination["4코옵션"]}<br>
+                3코옵션: ${bestCombination["3코옵션"].join(', ')}<br>
+                부옵션: ${JSON.stringify(bestCombination["부옵션"])}<br>
+                기초공: ${bestCombination["기초공"]}<br>
+                공격력: ${bestCombination["공격력"]} (${bestCombination["기초공"]} * ${Math.floor(1 + bestCombination["공격력"] / bestCombination["기초공"] - 1)} + ${bestCombination["공격력"] - bestCombination["기초공"]})<br>
+                치확: ${(bestCombination["치확"] * 100).toFixed(2)}%<br>
+                치피: ${(bestCombination["치피"] * 100).toFixed(2)}%<br>
+                속성피증: ${(bestCombination["속성피증"] * 100).toFixed(2)}%<br>
+                기능피증(${selectedAttackBonus}): ${(bestCombination["기능피증"] * 100).toFixed(2)}%
+            `;
+        }
+    </script>
+</body>
+</html>
+
