@@ -56,7 +56,7 @@
     <div class="container">
         <div class="input-fields">
             <div class="input-group">
-                <label for="baseAtk">기초공:</label>
+                <label for="baseAtk">기초공격력:</label>
                 <input type="number" id="baseAtk" step="0.1">
             </div>
             <div class="input-group">
@@ -264,7 +264,7 @@
                 4코옵션: ${bestCombination["4코옵션"]}<br>
                 3코옵션: ${bestCombination["3코옵션"].join(', ')}<br>
                 부옵션: ${JSON.stringify(bestCombination["부옵션"])}<br>
-                기초공: ${bestCombination["기초공"]}<br>
+                기초공격력: ${bestCombination["기초공"]}<br>
                 공격력: ${bestCombination["공격력"]} (${bestCombination["기초공"]} * ${Math.floor(1 + bestCombination["공격력"] / bestCombination["기초공"] - 1)} + ${bestCombination["공격력"] - bestCombination["기초공"]})<br>
                 치확: ${(bestCombination["치확"] * 100).toFixed(2)}%<br>
                 치피: ${(bestCombination["치피"] * 100).toFixed(2)}%<br>
