@@ -255,6 +255,9 @@
             }
 
             document.getElementById('damage').innerText = `현재 평균 데미지: ${Math.floor(nowDamage)}`;
+            if (bestCombination["부옵개수"] > 14) {
+                document.getElementById('message').innerHTML = '<p style="color:red;">명악귀입니다.</p><br>';
+            }
             document.getElementById('optimalDamage').innerText = `최적 부옵(${bestCombination["부옵개수"]}개) 시 평균 데미지: ${Math.floor(maxDamage)}`;
             document.getElementById('optimalCombination').innerHTML = `
                 최적 부옵 조합:<br>
