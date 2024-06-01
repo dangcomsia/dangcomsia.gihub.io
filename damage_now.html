@@ -49,6 +49,10 @@
         button:hover {
             background: #218838;
         }
+        .warning {
+            color: red;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -106,6 +110,7 @@
             <p id="damage"></p>
             <p id="optimalDamage"></p>
             <p id="optimalCombination"></p>
+            <p id="warning" class="warning"></p>
         </div>
     </div>
 
@@ -268,8 +273,20 @@
                 속성피증: ${(bestCombination["속성피증"] * 100).toFixed(2)}%<br>
                 기능피증(${selectedAttackBonus}): ${(bestCombination["기능피증"] * 100).toFixed(2)}%
             `;
+            if (bestCombination["부옵개수"] > 13 && bestCombination["부옵개수"] < 16) {
+                document.getElementById('warning').innerText = "명악귀입니다.";
+            } else {
+                document.getElementById('warning').innerText = "";
+            }            
+
+            if (bestCombination["부옵개수"] > 15) {
+                document.getElementById('warning').innerText = "심각한 명악귀입니다.";
+            } else {
+                document.getElementById('warning').innerText = "";
+            }
         }
     </script>
 </body>
 </html>
+
 
