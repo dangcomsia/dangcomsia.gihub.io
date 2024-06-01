@@ -56,7 +56,7 @@
     <div class="container">
         <div class="input-fields">
             <div class="input-group">
-                <label for="baseAtk">현재공격력:</label>
+                <label for="baseAtk">현재 총 공격력:</label>
                 <input type="number" id="baseAtk" step="0.1">
             </div>
             <div class="input-group">
@@ -68,15 +68,18 @@
                 <input type="number" id="critDmg" step="0.1">
             </div>
             <div class="input-group">
-                <label for="skillBonus">공명/일반/강공/해방 보너스 중 하나 (%):</label>
+                <label for="skillBonus">주력 공격방식(일반/강공/스킬/해방 피해보너스 중 하나) (%):</label>
                 <input type="number" id="skillBonus" step="0.1">
             </div>
             <div class="input-group">
                 <label for="elemBonus">속성 피해 보너스 (%):</label>
                 <input type="number" id="elemBonus" step="0.1">
             </div>
+            
+            <br>
+            
             <div class="input-group">
-                <label for="currentBaseAtk">기초공격력:</label>
+                <label for="currentBaseAtk">기초공격력(캐릭 세부정보 공격력 하얀 부분):</label>
                 <input type="number" id="currentBaseAtk" step="0.1">
             </div>
             <div class="input-group">
@@ -92,7 +95,7 @@
                 <input type="number" id="weaponAtkPercent" step="0.1">
             </div>
             <div class="input-group">
-                <label for="attackType">일반공격(1)/강공격(2)/공명스킬(3)/공명해방(4) 중 하나:</label>
+                <label for="attackType">주력 공격방식(일반(1)/강공(2)/스킬(3)/해방(4) 중 하나):</label>
                 <input type="number" id="attackType" step="1" min="1" max="4">
             </div>
             <button onclick="calculate()">결과 계산</button>
