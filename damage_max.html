@@ -76,7 +76,7 @@
                 <input type="number" id="energyRecharge" step="0.1">
             </div>
             <div class="input-group">
-                <label for="attackType">일반(1)/강(2)/스킬(3)/해방(4) 피해보너스 중 하나:</label>
+                <label for="attackType">주력 공격방식(일반(1)/강(2)/스킬(3)/해방(4) 중 하나):</label>
                 <input type="number" id="attackType" step="1" min="1" max="4">
             </div>
             <div class="input-group">
@@ -170,7 +170,7 @@
 
                 const co4Options = ["공퍼", "치확", "치피"];
                 const co3Options = ["공퍼", "속성피증", "공명효율"];
-                let selectedCo4 = null;
+                let selectedCo4 = [];
                 let selectedCo3 = [];
 
                 if (setSelection === 1) {
@@ -204,7 +204,7 @@
                         } else if (selectedCo4Option === "치피") {
                             currentCritDmg += 0.44;
                         }
-                        selectedCo3.push(selectedCo4Option);
+                        selectedCo4.push(selectedCo4Option);
                     }
                 }
 
