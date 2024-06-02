@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Damage Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+        }
+        .input-container, .options-container, .result-container {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .result-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .result-container b {
+            font-weight: bold;
+        }
+        .result-container .critical {
+            font-weight: bold;
+            color: red;
+        }
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="input-container">
+        <h2>Inputs</h2>
+        <label>기초공격력: <input type="number" id="base_atk" value="0" step="0.01"></label><br>
+        <label>총 공격력: <input type="number" id="atk_now" value="0" step="0.01"></label><br>
+        <label>깡공(에코부옵만 전부 덧셈): <input type="number" id="flat_atk_now" value="0" step="0.01"></label><br>
+        <label>크리티컬: <input type="number" id="crit_rate_now" value="0" step="0.01"></label><br>
+        <label>크리티컬 피해: <input type="number" id="crit_dmg_now" value="0" step="0.01"></label><br>
+        <label>공격 피해 보너스(공명/일반/강공/해방 중 하나만): <input type="number" id="skill_bonus_now" value="0" step="0.01"></label><br>
+        <label>피증 보정(0~100%): <input type="number" id="skill_bonus_reduce" value="100" step="0.01"></label><br>
+        <label>속성 피해 보너스: <input type="number" id="elem_bonus_now" value="0" step="0.01"></label><br>
+        <label>현재 공명 효율: <input type="number" id="energy_recharge_now" value="100" step="0.01"></label><br>
+        <label>공명 효율 목표: <input type="number" id="energy_recharge_obj" value="100" step="0.01"></label><br>
+        <label>무기 크리티컬(없으면 0): <input type="number" id="crit_rate_weapon" value="0" step="0.01"></label><br>
+        <label>무기 크리티컬 피해(없으면 0): <input type="number" id="crit_dmg_weapon" value="0" step="0.01"></label><br>
+        <label>무기 공격력 퍼센트(없으면 0): <input type="number" id="atk_percent_weapon" value="0" step="0.01"></label><br>
+        <label>무기 공명효율(없으면 0): <input type="number" id="energy_recharge_weapon" value="0" step="0.01"></label><br>
+        <label>파티 공격력 퍼센트(없으면 0): <input type="number" id="add_atk_percent" value="0" step="0.01"></label><br>
+        <label>파티 속성피증 퍼센트(없으면 0): <input type="number" id="add_elem_percent" value="0" step="0.01"></label><br>
+        <button onclick="calculate()">Calculate</button>
+    </div>
+
+    <div class="options-container">
+        <h2>Options</h2>
+        <label><input type="checkbox" id="light_set"> 광휘셋</label><br>
+        <label><input type="checkbox" id="cloud_set"> 구름셋</label><br>
+        <label><input type="checkbox" id="turtle_set"> 거북이</label><br>
+        <label><input type="checkbox" id="hack_set"> 백로</label><br>
+        <label><input type="checkbox" id="buff_maratan"> 마라탕</label><br>
+        <label><input type="checkbox" id="precise_calculation"> 정확하게 계산하기[10분이상걸림!!]</label><br>
+    </div>
+
+    <div class="result-container" id="results">
+        <h2>Results</h2>
+        <div>현재데미지: <span id="current_damage_val"></span></div>
+        <div>종결데미지: <span id="max_damage"></span></div>
+        <div><b>종결 대비 데미지: <span id="damage_ratio"></span>%</b></div>
+        <div><b>백분위: <span id="percentile"></span>%</b></div>
+        <div class="critical" id="crit_status"></div>
+    </div>
+</div>
+
+<script>
+function calculate() {
+    const base_atk = parseFloat(document.getElementById('base_atk').value);
+    const skill_bonus_reduce = parseFloat(document.getElementById('skill_bonus_reduce').value) / 100;
+    const atk_now = parseFloat(document.getElementById('atk_now').value);
+    const flat_atk_now = parseFloat(document.getElementById('flat_atk_now').value);
+    const crit_rate_now = parseFloat(document.getElementById('crit_rate_now').value) / 100;
+    const crit_dmg_now = parseFloat(document.getElementById('crit_dmg_now').value) / 100;
+    const skill_bonus_now = parseFloat(document.getElementById('skill_bonus_now').value) / 100 * skill_bonus_reduce;
+    const elem_bonus_now = parseFloat(document.getElementById('elem_bonus_now').value) / 100;
+    const energy_recharge_now = parseFloat(document.getElementById('energy_recharge_now').value) / 100;
+    const energy_recharge_obj = parseFloat(document.getElementById('energy_recharge_obj').value) / 100;
+
+    if (energy_recharge_now < energy_recharge_obj) {
+        alert("현재 공명 효율이 목표보다 높아야 계산할 수 있습니다.");
+        return;
+    }
+
+    const crit_rate_weapon = parseFloat(document.getElementById('crit_rate_weapon').value) / 100;
+    const crit_dmg_weapon = parseFloat(document.getElementById('crit_dmg_weapon').value) / 100;
+    const atk_percent_weapon = parseFloat(document.getElementById('atk_percent_weapon').value) / 100;
+    const energy_recharge_weapon = parseFloat(document.getElementById('energy_recharge_weapon').value) / 100;
+
+    let add_atk_percent = parseFloat(document.getElementById('add_atk_percent').value) / 100;
+    const add_elem_percent = parseFloat(document.getElementById('add_elem_percent').value) / 100;
+
+    let counts = 200000;
+    if (document.getElementById('precise_calculation').checked) {
+        counts *= 20;
+    }
+
+    // Initialize stat
+    const flat_atk = 350;
+    let crit_rate = 0.05 + crit_rate_weapon;
+    let crit_dmg = 1.5 + crit_dmg_weapon;
+    let skill_bonus = 0;
+    let elem_bonus = 0.4;
+    let atk_percent = 0.54 + atk_percent_weapon;
+    let energy_recharge = 1.0 + energy_recharge_weapon;
+
+    elem_bonus_now += add_elem_percent;
+    elem_bonus += add_elem_percent;
+
+    // Additional constants
+    const add_atk_percent_light = 0.15;
+    const add_atk_percent_cloud = 0.225;
+    const elem_bonus_turtle = 0.1;
+    const elem_bonus_hack = 0.12;
+
+    // Check for sets
+    if (document.getElementById('light_set').checked) {
+        add_atk_percent += add_atk_percent_light;
+    }
+
+    if (document.getElementById('cloud_set').checked) {
+        add_atk_percent += add_atk_percent_cloud;
+    }
+
+    atk_percent = 0.54 + add_atk_percent;
+    const renewal = (base_atk, atk_now, flat_atk_now, add_atk_percent) => {
+        return base_atk * (((atk_now - flat_atk_now) / base_atk) + add_atk_percent) + flat_atk_now;
+    };
+    const current_damage = (atk_now, elem_bonus_now, skill_bonus_now, crit_rate_now, crit_dmg_now) => {
+        return atk_now * (1 + elem_bonus_now + skill_bonus_now) * (crit_rate_now * crit_dmg_now + 1 - crit_rate_now) / 2;
+    };
+
+    atk_now = renewal(base_atk, atk_now, flat_atk_now, add_atk_percent);
+
+    if (document.getElementById('turtle_set').checked) {
+        elem_bonus_now += elem_bonus_turtle;
+        elem_bonus += elem_bonus_turtle;
+    }
+
+    if (document.getElementById('hack_set').checked) {
+        elem_bonus_now += elem_bonus_hack;
+        elem_bonus += elem_bonus_hack;
+    }
+
+    // Etc buff
+    if (document.getElementById('buff_maratan').checked) {
+        crit_rate_now += 0.28;
+        crit_rate += 0.28;
+    }
+
+    // Calculate current damage
+    const current_damage_val = current_damage(atk_now, elem_bonus_now, skill_bonus_now, crit_rate_now, crit_dmg_now);
+
+    // Initialize variables for simulation
+    let max_damage = 0;
+    let good_counts = 0;
+
+    const calculate_damage = (base_atk, atk_percent, flat_atk, elem_bonus, skill_bonus, crit_rate, crit_dmg) => {
+        const total_atk = base_atk * (1 + atk_percent) + flat_atk;
+        return total_atk * (1 + elem_bonus + skill_bonus) * (crit_rate * crit_dmg + 1 - crit_rate) / 2;
+    };
+
+    const co4_options = ["공퍼", "치확", "치피"];
+    const co3_options = ["공퍼", "속성피증", "공명효율"];
+
+    for (let i = 0; i < counts; i++) {
+        // Initialize base stat in for
+        let flat_atk_tem = flat_atk;
+        let crit_rate_tem = crit_rate;
+        let crit_dmg_tem = crit_dmg;
+        let skill_bonus_tem = skill_bonus;
+        let elem_bonus_tem = elem_bonus;
+        let atk_percent_tem = atk_percent;
+        let energy_recharge_tem = energy_recharge;
+
+        // Simulate stat upgrades
+        const upgrade_type = [
+            "flat_atk", "flat_atk", "flat_atk", "flat_atk", "flat_atk",
+            "atk_percent", "atk_percent", "atk_percent", "atk_percent", "atk_percent",
+            "crit_rate", "crit_rate", "crit_rate", "crit_rate", "crit_rate",
+            "crit_dmg", "crit_dmg", "crit_dmg", "crit_dmg", "crit_dmg",
+            "skill_bonus", "skill_bonus", "skill_bonus", "skill_bonus", "skill_bonus",
+            "energy_recharge", "energy_recharge", "energy_recharge", "energy_recharge", "energy_recharge",
+            "zero_atk", "zero_atk", "zero_atk", "zero_atk", "zero_atk",
+            "zero_atk", "zero_atk", "zero_atk", "zero_atk", "zero_atk",
+            "zero_atk", "zero_atk", "zero_atk", "zero_atk", "zero_atk",
+            "zero_atk", "zero_atk", "zero_atk", "zero_atk", "zero_atk",
+            "zero_atk", "zero_atk", "zero_atk", "zero_atk", "zero_atk",
+            "zero_atk", "zero_atk", "zero_atk", "zero_atk", "zero_atk"
+        ];
+
+        // Sample 25 random elements from upgrade_type
+        const randlist = [];
+        for (let j = 0; j < 25; j++) {
+            randlist.push(upgrade_type[Math.floor(Math.random() * upgrade_type.length)]);
+        }
+
+        for (const upgrade of randlist) {
+            if (upgrade === "flat_atk") {
+                flat_atk_tem += 40 + 10 * Math.floor(Math.random() * 4);
+            } else if (upgrade === "atk_percent") {
+                atk_percent_tem += 0.064 + 0.0075 * Math.floor(Math.random() * 8);
+            } else if (upgrade === "crit_rate") {
+                crit_rate_tem += 0.063 + 0.006 * Math.floor(Math.random() * 8);
+            } else if (upgrade === "crit_dmg") {
+                crit_dmg_tem += 0.126 + 0.012 * Math.floor(Math.random() * 8);
+            } else if (upgrade === "skill_bonus") {
+                skill_bonus_tem += (0.064 + 0.0075 * Math.floor(Math.random() * 8)) * skill_bonus_reduce;
+            } else if (upgrade === "energy_recharge") {
+                energy_recharge_tem += 0.068 + 0.008 * Math.floor(Math.random() * 8);
+            }
+        }
+
+        // Select additional options
+        const selected_co4 = co4_options[Math.floor(Math.random() * co4_options.length)];
+        if (selected_co4 === "공퍼") {
+            atk_percent_tem += 0.33;
+        } else if (selected_co4 === "치확") {
+            crit_rate_tem += 0.22;
+        } else if (selected_co4 === "치피") {
+            crit_dmg_tem += 0.44;
+        }
+
+        for (let k = 0; k < 2; k++) {
+            const selected_co3_option = co3_options[Math.floor(Math.random() * co3_options.length)];
+            if (selected_co3_option === "공퍼") {
+                atk_percent_tem += 0.3;
+            } else if (selected_co3_option === "속성피증") {
+                elem_bonus_tem += 0.3;
+            } else if (selected_co3_option === "공명효율") {
+                energy_recharge_tem += 0.32;
+            }
+        }
+
+        // Calculate new damage
+        const damage = calculate_damage(base_atk, atk_percent_tem, flat_atk_tem, elem_bonus_tem, skill_bonus_tem, crit_rate_tem, crit_dmg_tem);
+
+        // Update max damage and good count
+        if (energy_recharge_obj <= energy_recharge) {
+            if (damage >= max_damage) {
+                max_damage = damage;
+            }
+            if (damage >= current_damage_val) {
+                good_counts += 1;
+            }
+        }
+    }
+
+    // Output results
+    document.getElementById('current_damage_val').textContent = current_damage_val.toFixed(0);
+    document.getElementById('max_damage').textContent = max_damage.toFixed(0);
+    document.getElementById('damage_ratio').textContent = ((current_damage_val / max_damage) * 100).toFixed(2);
+    document.getElementById('percentile').textContent = ((good_counts / counts) * 100).toFixed(5);
+    let crit_status = "";
+    if ((good_counts / counts) < 0.00002) {
+        crit_status = "띵악귀입니다.";
+    }
+    if ((good_counts / counts) < 0.000003) {
+        crit_status = "심각한 띵악귀입니다.";
+    }
+    document.getElementById('crit_status').textContent = crit_status;
+}
+</script>
+
+</body>
+</html>
