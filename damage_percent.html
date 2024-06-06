@@ -45,7 +45,7 @@
         .result-container b {
             font-weight: bold;
         }
-        .result-container .critical {
+        .result-container .class {
             font-weight: bold;
             color: red;
         }
@@ -61,6 +61,7 @@
 <div class="container">
     <div class="input-container">
         <h2>띵조 스텟 비교 계산기</h2>
+        <h3>필수 입력</h3>
         <label><span style="font-weight:bold">공격력:</span> <input type="number" id="atk_now" value="0" step="0.01"></label>
         <label><span style="font-weight:bold">기초공격력:</span> <input type="number" id="base_atk" value="0" step="0.01"></label>
         <label><span style="font-weight:bold">크리 확률(%):</span> <input type="number" id="crit_rate_now" value="0" step="0.01"></label>
@@ -80,6 +81,7 @@
     </div>
 
     <div class="options-container">
+        <h2>추가 옵션</h2>
         <h3>본인 버프 효과</h3>
         <label><input type="checkbox" id="my_set"> 본인 에코 사용</label><br>
         <label><span>무기 부옵 공퍼:<br></span> <input type="number" id="add_atk_percent_weapon" value="0" step="0.01"></label>
@@ -92,9 +94,7 @@
         <label><input type="checkbox" id="turtle_set"> 거북이</label><br>
         <label><input type="checkbox" id="hack_set"> 백로</label><br><br>
         <label><span>파티 공퍼 돌파<br></span> <input type="number" id="add_atk_percent" value="0" step="0.01"></label>
-        <label><span>파티 속성 돌파<br></span> <input type="number" id="add_elem_percent" value="0" step="0.01"></label>
-        <h3>추가 옵션</h3>
-        <label><span style="font-weight:bold">속성 피해 보너스:</span> <input type="number" id="elem_bonus_now" value="0" step="0.01"></label>
+        <label><span>파티 속성 돌파<br></span> <input type="number" id="add_elem_percent" value="0" step="0.01"></label><br>
         
         <label><input type="checkbox" id="precise_calculation"> 정확하게 계산하기<br>[3분이상걸림!!]</label><br>
     </div>
@@ -105,7 +105,7 @@
         <div>종결데미지: <span id="max_damage"></span></div>
         <div><b>종결 대비 데미지: <span id="damage_ratio"></span>%</b></div>
         <div><b>스텟 추정 점수: <span id="percentile"></span>%</b></div>
-        <div class="critical" id="crit_status"></div>
+        <div class="class" id="status"></div>
     </div>
 </div>
 
@@ -341,7 +341,7 @@ function calculate() {
         status = "심각한 명악귀입니다.";
     }
         }
-    document.getElementById('crit_status').textContent = status;
+    document.getElementById('status').textContent = status;
     
     if (document.getElementById('precise_calculation').checked) {
         alert(`계산이 끝났습니다.`);
