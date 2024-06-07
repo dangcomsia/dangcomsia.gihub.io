@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Damage Calculator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #f0f2f5;
+            margin: 0;
+            padding: 5px;
+          position: relative;
+        }
+        .container {
+            display: flex;
+            gap: 10px;
+        }
+        .input-container, .options-container, .result-container, .relic-container {
+            border: 2px solid #ddd;
+            padding: 10px;
+            border-radius: 10px;
+            background: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .input-container, .relic-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .input-container label span, .relic-container label span {
+            flex: 1;
+            text-align: right;
+            padding-right: 0px;
+        }
+        .input-container label input{
+            flex: 1;
+            padding: 4px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+      .options-container label input, .relic-container label input {
+          flex: 1;
+          padding: 3px;
+          border: 1px solid #ccc;
+          border-radius: 3px;
+      }
+        .result-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .result-container b {
+            font-weight: bold;
+        }
+        .result-container .class {
+            font-weight: bold;
+            color: red;
+        }
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            background: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .relic-options {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            flex: 1;
+        }
+      .relic-container {
+          display: none; /* Initially hidden */
+          position: absolute;
+          top: 20px;
+          left: 20px;
+      }
+       .relic-options-container {
+          display: flex;
+          gap: 20px;
+        }
+        .item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+      .options-container{
+          display: none; /* Initially hidden */
+          position: absolute;
+        flex-direction: column;
+        gap: 1px;
+          top: 20px;
+          right: 20px;
+        line-height:20px
+      }
+        .range-container input[type="range"] {
+            flex: 1;
+        }
+        select {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease;
+        }
+        select:hover {
+            background: #f9f9f9;
+        }
+      .hidden { display: none; }
+      #stat_comparison {
+          position: absolute;
+          bottom: 20px;
+          right: 10px;
+          background-color: white;
+          border: 1px solid #ccc;
+          padding: 10px;
+          box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+
+          width: 300px;
+      }
+      .stat-column {
+          display: inline-block;
+          vertical-align: top;
+          width: 35%;
+          margin-right: 5%;
+      }
+      .stat-column:last-child {
+          margin-right: 0;
+      }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="input-container">
+        <h3>띵조 스텟 종합 계산기</h3>
+        <label><span style="font-weight:bold">현재 공격력:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="number" id="atk_now" value="0" step="0.01"></label>
+        <label><span style="font-weight:bold">기초 공격력:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="number" id="base_atk" value="0" step="0.01"></label>
+        <label><span style="font-weight:bold">크리티컬확률(%):</span> <input type="number" id="crit_rate_now" value="0" step="0.01"></label>
+        <label><span style="font-weight:bold">크리티컬피해(%):</span> <input type="number" id="crit_dmg_now" value="0" step="0.01"></label>
+        <label><span style="font-weight:bold">피해 타입 보너스:</span> <input type="number" id="skill_bonus_now" value="0" step="0.01"></label>
+        <label><span style="font-weight:bold">속성 피해 보너스:</span> <input type="number" id="elem_bonus_now" value="0" step="0.01"></label>
+        <label><span style="font-weight:bold">현재 공명 효율:&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="number" id="energy_recharge_now" value="100" step="0.01"></label>
+        <label><span style="font-weight:bold">무기 크리 확률:&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="number" id="crit_rate_weapon" value="0" step="0.01"></label>
+        <label><span style="font-weight:bold">무기 크리 피해:&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="number" id="crit_dmg_weapon" value="0" step="0.01"></label>
+        <label><span style="font-weight:bold">무기 공격 퍼센트:</span> <input type="number" id="atk_percent_weapon" value="0" step="0.01"></label>
+        <label><span style="font-weight:bold">무기 공명 효율:&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="number" id="energy_recharge_weapon" value="0" step="0.01"></label>
+        <button onclick="calculate()">Calculate</button><br>
+      <label>에코 교환창 열기<input type="checkbox" id="relic_toggle" name='calcul' onclick="toggleRelicContainer()"> </label>
+      <label>추가 옵션창 열기<input type="checkbox" id="option_toggle" name='calcul' onclick="optionContainer()"> </label>
+    </div>
+
+    <div class="options-container">
+      <h4>추가 선택 입력</h4>
+      <label><span>깡공(에코 부옵):<br></span> <input type="number" id="flat_atk_now" value="0" step="0.01"></label>
+      <label><span>피해 타입 딜지분(0~100%)<br></span> <input type="number" id="skill_bonus_reduce" value="100" step="0.01"></label>
+      <label><span>최소 공명 효율:<br></span> <input type="number" id="energy_recharge_obj" value="100" step="0.01"></label>
+        <h4>본인 버프 효과</h4>
+        <label><input type="checkbox" id="my_set"> 본인 에코 버프</label><br>
+        <label><span>무기 부옵 공퍼:<br></span> <input type="number" id="add_atk_percent_weapon" value="0" step="0.01"></label>
+        <label><span>무기 부옵 피증:<br></span> <input type="number" id="add_elem_percent_weapon" value="0" step="0.01"></label>
+        <label><span>치명 확률 추가:<br></span> <input type="number" id="add_crit_rate" value="0" step="0.01"></label>
+        <label><span>치명 피해 추가:<br></span> <input type="number" id="add_crit_dmg" value="0" step="0.01"></label>
+        <h4>파티 버프 효과</h4>
+        <label><input type="checkbox" id="light_set"> 광휘셋</label>
+        <label><input type="checkbox" id="cloud_set"> 구름셋</label>
+        <label><input type="checkbox" id="turtle_set"> 거북이</label>
+        <label><input type="checkbox" id="hack_set"> 백로</label><br>
+        <label><span>파티 공퍼 돌파<br></span> <input type="number" id="add_atk_percent" value="0" step="0.01"></label>
+        <label><span>파티 속성 돌파<br></span> <input type="number" id="add_elem_percent" value="0" step="0.01"></label>
+        <h4>계산 옵션</h4>
+        <label><input type="checkbox" name='calcul' id="precise_calculation"> 정확하게 계산하기<br>[3분이상걸림!!]</label>
+        <label><input type="checkbox" name='calcul' id="skip_calculation"> 종결 데미지 계산X<br>[빨라짐]</label>
+        <label><input type="checkbox" name='calcul' id="effi_cal"> 부옵 효율 계산</label>
+  </div>
+
+    <div class="result-container" id="results">
+        <h2>Results</h2>
+        <div>현재데미지: <span id="current_damage_val"></span></div>
+        <div>종결데미지: <span id="max_damage"></span></div>
+        <div><b>종결 대비 데미지: <span id="damage_ratio"></span>%</b></div>
+        <div><b>스텟 추정 점수: <span id="percentile"></span>★</b></div>
+
+       <div><pre id="damage_ranking"></pre></div>
+
+        <div class="class" id="status"></div>
+        <div>에코 변경시 대미지: <span id="new_damage_val"></span> (<span id="damage_change"></span>%)</div>
+
+      <label><input type="checkbox" id="stat_compare" name="stat_compare">스텟 비교창 열기</label>
+    </div>
+</div>
+
+      <div id="stat_comparison" class="hidden">
+          <div class="stat-column">
+              <h4>현재</h4>
+              <div>공격력: <span id="current_atk_val"></span></div>
+              <div>크리 확률: <span id="current_crit_rate_val"></span>%</div>
+              <div>크리 피해: <span id="current_crit_dmg_val"></span>%</div>
+              <div>피해 타입 보너스: <span id="current_skill_bonus_val"></span>%</div>
+              <div>속성 피해 보너스: <span id="current_elem_bonus_val"></span>%</div>
+
+          </div>
+          <div class="stat-column">
+              <h4>변경 후</h4>
+              <div>공격력: <span id="new_atk_val"></span></div>
+              <div>크리 확률: <span id="new_crit_rate_val"></span>%</div>
+              <div>크리 피해: <span id="new_crit_dmg_val"></span>%</div>
+              <div>피해 타입 보너스: <span id="new_skill_bonus_val"></span>%</div>
+              <div>속성 피해 보너스: <span id="new_elem_bonus_val"></span>%</div>
+
+          </div>
+      </div>
+  </div>
+
+<div class="relic-container">
+  <div class="relic-options-container">
+    <div class="relic-options">
+        <h2>기존 에코 작성</h2>
+        <label><input type="checkbox" onclick="toggleItems('dec')"> 옵션 표시</label>
+        <div id="dec-items-container" style="display:none;">
+          <div class="item">
+              <label>주옵:</label>
+              <select onchange="updateRangeValue_main(this, 'dec', 1)">
+                  <option value=""></option>
+                  <option value="main_atk_percent">4코 공퍼</option>
+                  <option value="main_crit_rate">4코 크리 확률</option>
+                  <option value="main_crit_dmg">4코 크리 피해</option>
+                  <option value="sub_atk_percent">3코 공퍼</option>
+                  <option value="sub_elem_percent">3코 피증</option>
+              </select>
+          </div>
+            <div class="item">
+                <label>부옵 1:</label>
+                <select onchange="updateRangeValue(this, 'dec', 2)">
+                    <option value=""></option>
+                    <option value="flat_atk">깡공</option>
+                    <option value="atk_percent">공퍼</option>
+                    <option value="crit_rate">크리 확률</option>
+                    <option value="crit_dmg">크리 피해</option>
+                    <option value="normal_skill_bonus">일반 피증</option>
+                    <option value="strong_skill_bonus">강공 피증</option>
+                    <option value="skill_skill_bonus">스킬 피증</option>
+                    <option value="ulti_skill_bonus">해방 피증</option>
+                </select>
+                <div class="range-container">
+                    <input type="range" min="0" max="0" step="1" value="0" oninput="updateRangeValue(this, 'dec', 2)">
+                    <span class="range-value">0</span>
+                </div>
+            </div>
+            <div class="item">
+                <label>부옵 2:</label>
+                <select onchange="updateRangeValue(this, 'dec', 3)">
+                    <option value=""></option>
+                    <option value="flat_atk">깡공</option>
+                    <option value="atk_percent">공퍼</option>
+                    <option value="crit_rate">크리 확률</option>
+                    <option value="crit_dmg">크리 피해</option>
+                    <option value="normal_skill_bonus">일반 피증</option>
+                    <option value="strong_skill_bonus">강공 피증</option>
+                    <option value="skill_skill_bonus">스킬 피증</option>
+                    <option value="ulti_skill_bonus">해방 피증</option>
+                </select>
+                <div class="range-container">
+                    <input type="range" min="0" max="0" step="1" value="0" oninput="updateRangeValue(this, 'dec', 3)">
+                    <span class="range-value">0</span>
+                </div>
+            </div>
+            <div class="item">
+                <label>부옵 3:</label>
+                <select onchange="updateRangeValue(this, 'dec', 4)">
+                    <option value=""></option>
+                    <option value="flat_atk">깡공</option>
+                    <option value="atk_percent">공퍼</option>
+                    <option value="crit_rate">크리 확률</option>
+                    <option value="crit_dmg">크리 피해</option>
+                    <option value="normal_skill_bonus">일반 피증</option>
+                    <option value="strong_skill_bonus">강공 피증</option>
+                    <option value="skill_skill_bonus">스킬 피증</option>
+                    <option value="ulti_skill_bonus">해방 피증</option>
+                </select>
+                <div class="range-container">
+                    <input type="range" min="0" max="0" step="1" value="0" oninput="updateRangeValue(this, 'dec', 4)">
+                    <span class="range-value">0</span>
+                </div>
+            </div>
+            <div class="item">
+                <label>부옵 4:</label>
+                <select onchange="updateRangeValue(this, 'dec', 5)">
+                    <option value=""></option>
+                    <option value="flat_atk">깡공</option>
+                    <option value="atk_percent">공퍼</option>
+                    <option value="crit_rate">크리 확률</option>
+                    <option value="crit_dmg">크리 피해</option>
+                    <option value="normal_skill_bonus">일반 피증</option>
+                    <option value="strong_skill_bonus">강공 피증</option>
+                    <option value="skill_skill_bonus">스킬 피증</option>
+                    <option value="ulti_skill_bonus">해방 피증</option>
+                </select>
+                <div class="range-container">
+                    <input type="range" min="0" max="0" step="1" value="0" oninput="updateRangeValue(this, 'dec', 5)">
+                    <span class="range-value">0</span>
+                </div>
+            </div>
+            <div class="item">
+                <label>부옵 5:</label>
+                <select onchange="updateRangeValue(this, 'dec', 6)">
+                    <option value=""></option>
+                    <option value="flat_atk">깡공</option>
+                    <option value="atk_percent">공퍼</option>
+                    <option value="crit_rate">크리 확률</option>
+                    <option value="crit_dmg">크리 피해</option>
+                    <option value="normal_skill_bonus">일반 피증</option>
+                    <option value="strong_skill_bonus">강공 피증</option>
+                    <option value="skill_skill_bonus">스킬 피증</option>
+                    <option value="ulti_skill_bonus">해방 피증</option>
+                </select>
+                <div class="range-container">
+                    <input type="range" min="0" max="0" step="1" value="0" oninput="updateRangeValue(this, 'dec', 6)">
+                    <span class="range-value">0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="relic-options">
+        <h2>신규 에코 추가</h2>
+        <label><input type="checkbox" onclick="toggleItems('add')"> 옵션 표시</label>
+        <div id="add-items-container" style="display:none;">
+          <div class="item">
+              <label>주옵:</label>
+              <select onchange="updateRangeValue_main(this, 'add', 1)">
+                  <option value=""></option>
+                  <option value="main_atk_percent">4코 공퍼</option>
+                  <option value="main_crit_rate">4코 크리 확률</option>
+                  <option value="main_crit_dmg">4코 크리 피해</option>
+                  <option value="sub_atk_percent">3코 공퍼</option>
+                  <option value="sub_elem_percent">3코 피증</option>
+              </select>
+          </div>
+            <div class="item">
+                <label>부옵 1:</label>
+                <select onchange="updateRangeValue(this, 'add', 2)">
+                    <option value=""></option>
+                    <option value="flat_atk">깡공</option>
+                    <option value="atk_percent">공퍼</option>
+                    <option value="crit_rate">크리 확률</option>
+                    <option value="crit_dmg">크리 피해</option>
+                    <option value="normal_skill_bonus">일반 피증</option>
+                    <option value="strong_skill_bonus">강공 피증</option>
+                    <option value="skill_skill_bonus">스킬 피증</option>
+                    <option value="ulti_skill_bonus">해방 피증</option>
+                </select>
+                <div class="range-container">
+                    <input type="range" min="0" max="0" step="1" value="0" oninput="updateRangeValue(this, 'add', 2)">
+                    <span class="range-value">0</span>
+                </div>
+            </div>
+            <div class="item">
+                <label>부옵 2:</label>
+                <select onchange="updateRangeValue(this, 'add', 3)">
+                    <option value=""></option>
+                    <option value="flat_atk">깡공</option>
+                    <option value="atk_percent">공퍼</option>
+                    <option value="crit_rate">크리 확률</option>
+                    <option value="crit_dmg">크리 피해</option>
+                    <option value="normal_skill_bonus">일반 피증</option>
+                    <option value="strong_skill_bonus">강공 피증</option>
+                    <option value="skill_skill_bonus">스킬 피증</option>
+                    <option value="ulti_skill_bonus">해방 피증</option>
+                </select>
+                <div class="range-container">
+                    <input type="range" min="0" max="0" step="1" value="0" oninput="updateRangeValue(this, 'add', 3)">
+                    <span class="range-value">0</span>
+                </div>
+            </div>
+            <div class="item">
+                <label>부옵 3:</label>
+                <select onchange="updateRangeValue(this, 'add', 4)">
+                    <option value=""></option>
+                    <option value="flat_atk">깡공</option>
+                    <option value="atk_percent">공퍼</option>
+                    <option value="crit_rate">크리 확률</option>
+                    <option value="crit_dmg">크리 피해</option>
+                    <option value="normal_skill_bonus">일반 피증</option>
+                    <option value="strong_skill_bonus">강공 피증</option>
+                    <option value="skill_skill_bonus">스킬 피증</option>
+                    <option value="ulti_skill_bonus">해방 피증</option>
+                </select>
+                <div class="range-container">
+                    <input type="range" min="0" max="0" step="1" value="0" oninput="updateRangeValue(this, 'add', 4)">
+                    <span class="range-value">0</span>
+                </div>
+            </div>
+            <div class="item">
+                <label>부옵 4:</label>
+                <select onchange="updateRangeValue(this, 'add', 5)">
+                    <option value=""></option>
+                    <option value="flat_atk">깡공</option>
+                    <option value="atk_percent">공퍼</option>
+                    <option value="crit_rate">크리 확률</option>
+                    <option value="crit_dmg">크리 피해</option>
+                    <option value="normal_skill_bonus">일반 피증</option>
+                    <option value="strong_skill_bonus">강공 피증</option>
+                    <option value="skill_skill_bonus">스킬 피증</option>
+                    <option value="ulti_skill_bonus">해방 피증</option>
+                </select>
+                <div class="range-container">
+                    <input type="range" min="0" max="0" step="1" value="0" oninput="updateRangeValue(this, 'add', 5)">
+                    <span class="range-value">0</span>
+                </div>
+            </div>
+            <div class="item">
+                <label>부옵 5:</label>
+                <select onchange="updateRangeValue(this, 'add', 6)">
+                    <option value=""></option>
+                    <option value="flat_atk">깡공</option>
+                    <option value="atk_percent">공퍼</option>
+                    <option value="crit_rate">크리 확률</option>
+                    <option value="crit_dmg">크리 피해</option>
+                    <option value="normal_skill_bonus">일반 피증</option>
+                    <option value="strong_skill_bonus">강공 피증</option>
+                    <option value="skill_skill_bonus">스킬 피증</option>
+                    <option value="ulti_skill_bonus">해방 피증</option>
+                </select>
+                <div class="range-container">
+                    <input type="range" min="0" max="0" step="1" value="0" oninput="updateRangeValue(this, 'add', 6)">
+                    <span class="range-value">0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const relicValues = {
+    flat_atk: [40, 50, 60, 70],
+    atk_percent: [6.4, 7.1, 7.9, 8.6, 9.4, 10.1, 10.9, 11.6],
+    crit_rate: [6.3, 6.9, 7.5, 8.1, 8.7, 9.3, 9.9, 10.5],
+    crit_dmg: [12.6, 13.8, 15, 16.2, 17.4, 18.6, 19.8, 21],
+    normal_skill_bonus: [6.4, 7.1, 7.9, 8.6, 9.4, 10.1, 10.9, 11.6],
+    strong_skill_bonus: [6.4, 7.1, 7.9, 8.6, 9.4, 10.1, 10.9, 11.6],
+    skill_skill_bonus: [6.4, 7.1, 7.9, 8.6, 9.4, 10.1, 10.9, 11.6],
+    ulti_skill_bonus: [6.4, 7.1, 7.9, 8.6, 9.4, 10.1, 10.9, 11.6]
+};
+
+  const mainValues = {
+      main_atk_percent: [33],
+      main_crit_rate: [22],
+      main_crit_dmg: [44],
+      sub_atk_percent: [30],
+      sub_elem_percent: [30]
+  };
+
+
+  let relicStats = {
+      dec: { flat_atk: 0, atk_percent: 0, crit_rate: 0, crit_dmg: 0, normal_skill_bonus: 0, strong_skill_bonus: 0, skill_skill_bonus: 0, ulti_skill_bonus: 0, main_atk_percent: 0, main_crit_rate: 0, main_crit_dmg: 0, sub_atk_percent:0, sub_elem_percent:0 },
+      add: { flat_atk: 0, atk_percent: 0, crit_rate: 0, crit_dmg: 0, normal_skill_bonus: 0, strong_skill_bonus: 0, skill_skill_bonus: 0, ulti_skill_bonus: 0, main_atk_percent: 0, main_crit_rate: 0, main_crit_dmg: 0, sub_atk_percent:0, sub_elem_percent:0 }
+  };
+
+  function toggleRelicContainer() {
+      const relicContainer = document.querySelector('.relic-container');
+      const checkbox = document.getElementById('relic_toggle');
+      if (checkbox.checked) {
+          relicContainer.style.display = 'flex';
+      } else {
+          relicContainer.style.display = 'none';
+      }
+  }
+  function optionContainer() {
+      const optionContainer = document.querySelector('.options-container');
+      const checkbox = document.getElementById('option_toggle');
+      if (checkbox.checked) {
+        optionContainer.style.display = 'flex';
+      } else {
+        optionContainer.style.display = 'none';
+      }
+  }
+
+function toggleItems(type) {
+    const container = document.getElementById(`${type}-items-container`);
+    container.style.display = container.style.display === 'none' ? 'block' : 'none';
+}
+
+  function updateRangeValue(selectElement, relicType, subOption) {
+      const value = selectElement.value;
+      const rangeInput = selectElement.parentElement.querySelector('input[type="range"]');
+      const rangeValue = selectElement.parentElement.querySelector('.range-value');
+
+      if (value) {
+          rangeInput.max = relicValues[value].length - 1;
+          rangeInput.value = 0;
+          rangeValue.textContent = relicValues[value][0] + (value.includes('percent') || value.includes('rate') || value.includes('dmg') ? '%' : '');
+          relicStats[relicType][value] = relicValues[value][0];
+      } else {
+          rangeInput.max = 0;
+          rangeInput.value = 0;
+          rangeValue.textContent = 0;
+          relicStats[relicType][value] = 0;
+      }
+
+      rangeInput.oninput = function() {
+          rangeValue.textContent = relicValues[value][this.value] + (value.includes('percent') || value.includes('rate') || value.includes('dmg') ? '%' : '');
+          relicStats[relicType][value] = relicValues[value][this.value];
+      };
+  }
+
+  function updateRangeValue_main(selectElement, relicType, subOption) {
+      const value = selectElement.value;
+
+      if (value) {
+          relicStats[relicType][value] = mainValues[value][0];
+      } else {
+          relicStats[relicType][value] = 0;
+      }
+  }
+
+
+
+
+
+
+
+
+
+    function calculate() {
+        const base_atk = parseFloat(document.getElementById('base_atk').value);
+        const skill_bonus_reduce = parseFloat(document.getElementById('skill_bonus_reduce').value) / 100;
+        let atk_now = parseFloat(document.getElementById('atk_now').value);
+        let flat_atk_now = parseFloat(document.getElementById('flat_atk_now').value) / 1;
+        let crit_rate_now = parseFloat(document.getElementById('crit_rate_now').value) / 100;
+        let crit_dmg_now = parseFloat(document.getElementById('crit_dmg_now').value) / 100;
+        let skill_bonus_now = parseFloat(document.getElementById('skill_bonus_now').value) / 100;
+        let elem_bonus_now = parseFloat(document.getElementById('elem_bonus_now').value) / 100;
+        let energy_recharge_now = parseFloat(document.getElementById('energy_recharge_now').value) / 100;
+        let energy_recharge_obj = parseFloat(document.getElementById('energy_recharge_obj').value) / 100;
+        let atk_percent_now = (atk_now - base_atk - flat_atk_now) / base_atk;
+
+        if (energy_recharge_now < energy_recharge_obj) {
+            alert("현재 공명 효율이 공명 효율 목표보다 높아야 계산할 수 있습니다.");
+            return;
+        }
+
+        const crit_rate_weapon = parseFloat(document.getElementById('crit_rate_weapon').value) / 100;
+        const crit_dmg_weapon = parseFloat(document.getElementById('crit_dmg_weapon').value) / 100;
+        const atk_percent_weapon = parseFloat(document.getElementById('atk_percent_weapon').value) / 100;
+        const energy_recharge_weapon = parseFloat(document.getElementById('energy_recharge_weapon').value) / 100;
+
+        let add_atk_percent_weapon = parseFloat(document.getElementById('add_atk_percent_weapon').value) / 100;
+        let add_elem_percent_weapon = parseFloat(document.getElementById('add_elem_percent_weapon').value) / 100;
+        let add_atk_percent = parseFloat(document.getElementById('add_atk_percent').value) / 100;
+        let add_elem_percent = parseFloat(document.getElementById('add_elem_percent').value) / 100;
+        let add_crit_rate = parseFloat(document.getElementById('add_crit_rate').value) / 100;
+        let add_crit_dmg = parseFloat(document.getElementById('add_crit_dmg').value) / 100;
+
+        let counts = 10000000;
+      if ((document.getElementById('precise_calculation').checked) && (document.getElementById('skip_calculation').checked)) {
+          alert("정확하게 계산하려면 종결데미지 계산이 필요합니다.");
+          return;
+      }
+        if (document.getElementById('precise_calculation').checked) {
+            counts *= 20;
+        }
+        if (document.getElementById('skip_calculation').checked) {
+            counts = 0;
+        }
+
+
+        // Initialize stat
+        const flat_atk = 350;
+        let crit_rate = 0.05 + crit_rate_weapon;
+        let crit_dmg = 1.5 + crit_dmg_weapon;
+        let skill_bonus = 0;
+        let elem_bonus = 0.4;
+        let atk_percent = 0.54 + atk_percent_weapon;
+        let energy_recharge = 1.0 + energy_recharge_weapon;
+
+        elem_bonus_now += add_elem_percent;
+        elem_bonus += add_elem_percent;
+        elem_bonus_now += add_elem_percent_weapon;
+        elem_bonus += add_elem_percent_weapon;
+
+        crit_rate += add_crit_rate;
+        crit_rate_now += add_crit_rate;
+        crit_dmg += add_crit_dmg;
+        crit_dmg_now += add_crit_dmg;
+
+        // Additional constants
+        const add_my_skill_bonus = 0.12;
+        const add_my_elem_bonus = 0.12;
+        const add_atk_percent_light = 0.15;
+        const add_atk_percent_cloud = 0.225;
+        const elem_bonus_turtle = 0.1;
+        const elem_bonus_hack = 0.12;
+
+        // Check for sets
+        if (document.getElementById('my_set').checked) {
+            skill_bonus_now += add_my_skill_bonus;
+            skill_bonus += add_my_skill_bonus;
+            elem_bonus_now += add_my_elem_bonus;
+            elem_bonus += add_my_elem_bonus;
+        }
+
+        if (document.getElementById('light_set').checked) {
+            add_atk_percent += add_atk_percent_light;
+        }
+
+        if (document.getElementById('cloud_set').checked) {
+            add_atk_percent += add_atk_percent_cloud;
+        }
+
+        elem_bonus_now += 0.3;
+
+
+        const calculate_damage = (base_atk, atk_percent, flat_atk, elem_bonus, skill_bonus, crit_rate, crit_dmg, skill_bonus_reduce) => {
+            let total_atk = base_atk * (1 + atk_percent) + flat_atk;
+            if (crit_rate_now <= 1) {
+                return total_atk * (1 + elem_bonus + skill_bonus * skill_bonus_reduce) * (crit_rate * crit_dmg + 1 - crit_rate) / 2;
+            } else {
+                return total_atk * (1 + elem_bonus + skill_bonus * skill_bonus_reduce) * (crit_dmg) / 2;
+            }
+        };
+
+        atk_percent = 0.54 + add_atk_percent;
+        atk_percent_now += add_atk_percent;
+        atk_percent += add_atk_percent_weapon;
+        atk_percent_now += add_atk_percent_weapon;
+
+        if (document.getElementById('turtle_set').checked) {
+            elem_bonus_now += elem_bonus_turtle;
+            elem_bonus += elem_bonus_turtle;
+        }
+
+        if (document.getElementById('hack_set').checked) {
+            elem_bonus_now += elem_bonus_hack;
+            elem_bonus += elem_bonus_hack;
+        }
+
+        // Calculate current damage
+        const current_damage_val = calculate_damage(base_atk, atk_percent_now, flat_atk_now, elem_bonus_now, skill_bonus_now, crit_rate_now, crit_dmg_now, skill_bonus_reduce);
+
+        // Calculate new damage with relics
+      console.log("relicStats:", relicStats);
+
+        const flat_atk_new = flat_atk_now + (- relicStats.dec.flat_atk + relicStats.add.flat_atk);
+        const atk_percent_new = atk_percent_now + (- relicStats.dec.main_atk_percent - relicStats.dec.atk_percent - relicStats.dec.sub_atk_percent + relicStats.add.main_atk_percent + relicStats.add.atk_percent + relicStats.add.sub_atk_percent)/100;
+        const crit_rate_new = crit_rate_now + (- relicStats.dec.main_crit_rate - relicStats.dec.crit_rate + relicStats.add.main_crit_rate + relicStats.add.crit_rate)/100;
+        const crit_dmg_new = crit_dmg_now + (- relicStats.dec.main_crit_dmg - relicStats.dec.crit_dmg + relicStats.add.main_crit_dmg + relicStats.add.crit_dmg)/100;
+        const elem_bonus_new = elem_bonus_now + (- relicStats.dec.sub_elem_percent + relicStats.add.sub_elem_percent)/100;
+        const skill_bonus_new = skill_bonus_now + (- relicStats.dec.normal_skill_bonus - relicStats.dec.strong_skill_bonus - relicStats.dec.skill_skill_bonus - relicStats.dec.ulti_skill_bonus + relicStats.add.normal_skill_bonus + relicStats.add.strong_skill_bonus + relicStats.add.skill_skill_bonus + relicStats.add.ulti_skill_bonus)/100;
+       const atk_new = (base_atk * (1+atk_percent_new) + flat_atk_new).toFixed(0);
+
+
+        const new_damage_val = calculate_damage(base_atk, atk_percent_new, flat_atk_new, elem_bonus_new, skill_bonus_new, crit_rate_new, crit_dmg_new, skill_bonus_reduce);
+
+
+
+
+
+        document.getElementById('new_damage_val').textContent = new_damage_val.toFixed(0);
+      let damage_change = ((new_damage_val - current_damage_val) / current_damage_val * 100).toFixed(2);
+
+      // 변화량이 0보다 크면 + 부호 추가
+      if (damage_change > 0) {
+          damage_change = "+" + damage_change;
+      }
+
+      document.getElementById('damage_change').textContent = damage_change;
+
+
+      // best option cal
+      let atk_percent_plus = atk_percent_now + 0.09;
+      let flat_atk_plus = flat_atk_now + 55;
+      let skill_bonus_plus = skill_bonus_now + 0.09;
+      let crit_rate_plus = crit_rate_now + 0.084;
+      let crit_dmg_plus = crit_dmg_now + 0.168;
+
+
+
+      // 각각의 데미지 증가값 계산
+      const plus_damage_atk = calculate_damage(base_atk, atk_percent_plus, flat_atk_now, elem_bonus_now, skill_bonus_now, crit_rate_now, crit_dmg_now, skill_bonus_reduce) - current_damage_val;
+      const plus_damage_flat = calculate_damage(base_atk, atk_percent_now, flat_atk_plus, elem_bonus_now, skill_bonus_now, crit_rate_now, crit_dmg_now, skill_bonus_reduce) - current_damage_val;
+      const plus_damage_skill = calculate_damage(base_atk, atk_percent_now, flat_atk_now, elem_bonus_now, skill_bonus_plus, crit_rate_now, crit_dmg_now, skill_bonus_reduce) - current_damage_val;
+      const plus_damage_crit_rate = calculate_damage(base_atk, atk_percent_now, flat_atk_now, elem_bonus_now, skill_bonus_now, crit_rate_plus, crit_dmg_now, skill_bonus_reduce) - current_damage_val;
+      const plus_damage_crit_dmg = calculate_damage(base_atk, atk_percent_now, flat_atk_now, elem_bonus_now, skill_bonus_now, crit_rate_now, crit_dmg_plus, skill_bonus_reduce) - current_damage_val;
+
+      // 데미지 증가값들을 배열에 저장
+      let damage_values = [
+          { type: 'atk', value: plus_damage_atk, label: '공격력 증가' },
+          { type: 'flat', value: plus_damage_flat, label: '깡공' },
+          { type: 'skill', value: plus_damage_skill, label: '피해 증가' },
+          { type: 'crit_rate', value: plus_damage_crit_rate, label: '치명타 확률 증가' },
+          { type: 'crit_dmg', value: plus_damage_crit_dmg, label: '치명타 피해 증가' }
+      ];
+
+
+
+      // 큰 순서대로 정렬
+      damage_values.sort((a, b) => b.value - a.value);
+
+      // 가장 큰 증가 비율을 100%로 기준 설정
+      let max_increase = damage_values[0].value;
+
+      // 출력할 문자열 생성
+      let ranking = '';
+
+      console.log("damage_values:", damage_values);
+
+      if (document.getElementById('effi_cal').checked) {
+          ranking = '부옵: 딜 증가량(효율)\n';
+          damage_values.forEach(damage => {
+              let increase_percent = (damage.value / current_damage_val * 100).toFixed(2);
+              let relative_percent = (damage.value / max_increase * 100).toFixed(2);
+              ranking += `${damage.label}(${damage.type}): ${increase_percent}% (${relative_percent}%)\n`;
+          });
+      }
+
+      console.log("ranking", ranking);
+      // 결과를 span 요소에 설정
+      document.getElementById('damage_ranking').textContent = ranking;
+
+
+
+
+    // Initialize variables for simulation
+    let max_damage = 0;
+    let good_counts = 0;
+
+
+ //스텟 비교창
+      document.getElementById('stat_compare').addEventListener('change', function() {
+          const statComparison = document.getElementById('stat_comparison');
+          if (this.checked) {
+              statComparison.classList.remove('hidden');
+              updateStatComparison();
+          } else {
+              statComparison.classList.add('hidden');
+          }
+      });
+
+      function updateStatComparison() {
+
+          document.getElementById('current_atk_val').textContent = atk_now;
+          document.getElementById('new_atk_val').textContent = atk_new;
+          document.getElementById('current_crit_rate_val').textContent = (crit_rate_now * 100).toFixed(2);
+          document.getElementById('new_crit_rate_val').textContent = (crit_rate_new * 100).toFixed(2);
+          document.getElementById('current_crit_dmg_val').textContent = (crit_dmg_now * 100).toFixed(2);
+          document.getElementById('new_crit_dmg_val').textContent = (crit_dmg_new * 100).toFixed(2);
+          document.getElementById('current_skill_bonus_val').textContent = (skill_bonus_now * 100).toFixed(2);
+          document.getElementById('new_skill_bonus_val').textContent = (skill_bonus_new * 100).toFixed(2);
+          document.getElementById('current_elem_bonus_val').textContent = (elem_bonus_now * 100).toFixed(2);
+          document.getElementById('new_elem_bonus_val').textContent = (elem_bonus_new * 100).toFixed(2);
+
+      }
+
+      document.querySelectorAll('input').forEach(input => {
+          input.addEventListener('input', function() {
+              if (document.getElementById('stat_compare').checked) {
+                  updateStatComparison();
+              }
+          });
+      });
+
+
+   // Simulation part
+
+    const co4_options = ["공퍼", "치확", "치피"];
+    const co3_options = ["공퍼", "속성피증", "공명효율"];
+
+
+    for (let i = 0; i < counts; i++) {
+        // Initialize base stat in for
+        let flat_atk_tem = flat_atk;
+        let crit_rate_tem = crit_rate;
+        let crit_dmg_tem = crit_dmg;
+        let skill_bonus_tem = skill_bonus;
+        let elem_bonus_tem = elem_bonus;
+        let atk_percent_tem = atk_percent;
+        let energy_recharge_tem = energy_recharge;
+
+        // Simulate stat upgrades
+        let upgrade_type = [
+            "flat_atk", "flat_atk", "flat_atk", "flat_atk", "flat_atk",
+            "atk_percent", "atk_percent", "atk_percent", "atk_percent", "atk_percent",
+            "crit_rate", "crit_rate", "crit_rate", "crit_rate", "crit_rate",
+            "crit_dmg", "crit_dmg", "crit_dmg", "crit_dmg", "crit_dmg",
+            "skill_bonus", "skill_bonus", "skill_bonus", "skill_bonus", "skill_bonus",
+            "energy_recharge", "energy_recharge", "energy_recharge", "energy_recharge", "energy_recharge",
+            "zero_atk", "zero_atk", "zero_atk", "zero_atk", "zero_atk",
+            "zero_atk", "zero_atk", "zero_atk", "zero_atk", "zero_atk",
+            "zero_atk", "zero_atk", "zero_atk", "zero_atk", "zero_atk",
+            "zero_atk", "zero_atk", "zero_atk", "zero_atk", "zero_atk",
+            "zero_atk", "zero_atk", "zero_atk", "zero_atk", "zero_atk",
+            "zero_atk", "zero_atk", "zero_atk", "zero_atk", "zero_atk"
+        ];
+
+        // Sample 25 random elements from upgrade_type
+        let randlist = [];
+        for (let j = 0; j < 25; j++) {
+            randlist.push(upgrade_type[Math.floor(Math.random() * upgrade_type.length)]);
+        }
+
+        for (let upgrade of randlist) {
+            if (upgrade === "flat_atk") {
+                flat_atk_tem += 40 + 10 * Math.floor(Math.random() * 4);
+            } else if (upgrade === "atk_percent") {
+                atk_percent_tem += 0.064 + 0.0075 * Math.floor(Math.random() * 8);
+            } else if (upgrade === "crit_rate") {
+                crit_rate_tem += 0.063 + 0.006 * Math.floor(Math.random() * 8);
+            } else if (upgrade === "crit_dmg") {
+                crit_dmg_tem += 0.126 + 0.012 * Math.floor(Math.random() * 8);
+            } else if (upgrade === "skill_bonus") {
+                skill_bonus_tem += (0.064 + 0.0075 * Math.floor(Math.random() * 8)) * skill_bonus_reduce;
+            } else if (upgrade === "energy_recharge") {
+                energy_recharge_tem += 0.068 + 0.008 * Math.floor(Math.random() * 8);
+            }
+        }
+
+        // Select additional options
+        let selected_co4 = co4_options[Math.floor(Math.random() * co4_options.length)];
+        if (selected_co4 === "공퍼") {
+            atk_percent_tem += 0.33;
+        } else if (selected_co4 === "치확") {
+            crit_rate_tem += 0.22;
+        } else if (selected_co4 === "치피") {
+            crit_dmg_tem += 0.44;
+        }
+
+        for (let k = 0; k < 2; k++) {
+            let selected_co3_option = co3_options[Math.floor(Math.random() * co3_options.length)];
+            if (selected_co3_option === "공퍼") {
+                atk_percent_tem += 0.3;
+            } else if (selected_co3_option === "속성피증") {
+                elem_bonus_tem += 0.3;
+            } else if (selected_co3_option === "공명효율") {
+                energy_recharge_tem += 0.32;
+            }
+        }
+
+        // Calculate new damage
+        let damage = calculate_damage(base_atk, atk_percent_tem, flat_atk_tem, elem_bonus_tem, skill_bonus_tem, crit_rate_tem, crit_dmg_tem, skill_bonus_reduce);
+
+        // Update max damage and good count
+        if (energy_recharge_obj <= energy_recharge) {
+            if (damage >= max_damage) {
+                max_damage = damage;
+            }
+            if (damage >= current_damage_val) {
+                good_counts += 1;
+            }
+        }
+    }
+
+
+
+
+
+    // Output results
+    document.getElementById('current_damage_val').textContent = current_damage_val.toFixed(0);
+    document.getElementById('max_damage').textContent = max_damage.toFixed(0);
+    document.getElementById('damage_ratio').textContent = ((current_damage_val / max_damage) * 100).toFixed(2);
+    document.getElementById('percentile').textContent = (-Math.log(good_counts / counts)/2).toFixed(2);
+    let status = "";
+    if (document.getElementById('precise_calculation').checked) {
+        if (((current_damage_val / max_damage) * 100) >= 90) {
+            status = "명악귀입니다.";
+        }
+        if (((current_damage_val / max_damage) * 100) >= 94) {
+            status = "심각한 명악귀입니다.";
+        }
+    }
+    document.getElementById('status').textContent = status;
+
+    if (document.getElementById('precise_calculation').checked) {
+        alert(`계산이 끝났습니다.`);
+    }
+
+}
+
+
+</script>
+
+</body>
+</html>
+
+</body>
+</html>
