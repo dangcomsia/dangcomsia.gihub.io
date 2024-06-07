@@ -141,7 +141,7 @@
 
 <div class="container">
     <div class="input-container">
-        <h2>띵조 스텟 비교 계산기</h2>
+        <h2>띵조 스텟 종합 계산기</h2>
         <h3>필수 입력</h3>
         <label><span style="font-weight:bold">공격력:</span> <input type="number" id="atk_now" value="0" step="0.01"></label>
         <label><span style="font-weight:bold">기초공격력:</span> <input type="number" id="base_atk" value="0" step="0.01"></label>
@@ -708,7 +708,7 @@ function toggleItems(type) {
       console.log("damage_values:", damage_values);
       
       if (document.getElementById('effi_cal').checked) {
-          ranking = '부옵 효율 순위\n';
+          ranking = '부옵: 딜 증가량(효율)\n';
           damage_values.forEach(damage => {
               let increase_percent = (damage.value / current_damage_val * 100).toFixed(2);
               let relative_percent = (damage.value / max_increase * 100).toFixed(2);
