@@ -160,6 +160,7 @@
         <button onclick="calculate()">Calculate</button><br>
       <label>상단에 에코 교환창 열기<input type="checkbox" id="relic_toggle" name='calcul' onclick="toggleRelicContainer()"> </label>
       <label>추가 옵션창 열기<input type="checkbox" id="option_toggle" name='calcul' onclick="optionContainer()"> </label>
+      <label>종결 계산 생략[개빨라짐]<input type="checkbox" name='calcul' id="skip_calculation"></label>
     </div>
 
     <div class="options-container">
@@ -182,7 +183,6 @@
         <label><span>파티 속성 돌파<br></span> <input type="number" id="add_elem_percent" value="0" step="0.01"></label>
         <h4>계산 옵션</h4>
         <label><input type="checkbox" name='calcul' id="precise_calculation"> 정확하게 계산하기<br>[3분이상걸림!!]</label>
-        <label><input type="checkbox" name='calcul' id="skip_calculation"> 종결 데미지 계산X<br>[빨라짐]</label>
         <label><input type="checkbox" name='calcul' id="effi_cal"> 부옵 효율 계산</label>
   </div>
 
