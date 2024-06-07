@@ -114,13 +114,34 @@
         select:hover {
             background: #f9f9f9;
         }
+      .hidden { display: none; }
+      #stat_comparison {
+          position: absolute;
+          bottom: 20px;
+          right: 10px;
+          background-color: white;
+          border: 1px solid #ccc;
+          padding: 10px;
+          box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        
+          width: 300px;
+      }
+      .stat-column {
+          display: inline-block;
+          vertical-align: top;
+          width: 45%;
+          margin-right: 5%;
+      }
+      .stat-column:last-child {
+          margin-right: 0;
+      }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="input-container">
-        <h2>띵조 스텟 종합 계산기</h2>
+        <h2>띵조 스텟 비교 계산기</h2>
         <h3>필수 입력</h3>
         <label><span style="font-weight:bold">공격력:</span> <input type="number" id="atk_now" value="0" step="0.01"></label>
         <label><span style="font-weight:bold">기초공격력:</span> <input type="number" id="base_atk" value="0" step="0.01"></label>
@@ -174,8 +195,32 @@
       
         <div class="class" id="status"></div>
         <div>에코 변경시 대미지: <span id="new_damage_val"></span> (<span id="damage_change"></span>%)</div>
+
+      <label><input type="checkbox" id="stat_compare" name="stat_compare">스텟 비교창 열기</label>
     </div>
 </div>
+  
+      <div id="stat_comparison" class="hidden">
+          <div class="stat-column">
+              <h4>현재</h4>
+              <div>공격력: <span id="current_atk_val"></span></div>
+              <div>크리 확률: <span id="current_crit_rate_val"></span>%</div>
+              <div>크리 피해: <span id="current_crit_dmg_val"></span>%</div>
+              <div>피해 타입 보너스: <span id="current_skill_bonus_val"></span>%</div>
+              <div>속성 피해 보너스: <span id="current_elem_bonus_val"></span>%</div>
+
+          </div>
+          <div class="stat-column">
+              <h4>변경 후</h4>
+              <div>공격력: <span id="new_atk_val"></span></div>
+              <div>크리 확률: <span id="new_crit_rate_val"></span>%</div>
+              <div>크리 피해: <span id="new_crit_dmg_val"></span>%</div>
+              <div>피해 타입 보너스: <span id="new_skill_bonus_val"></span>%</div>
+              <div>속성 피해 보너스: <span id="new_elem_bonus_val"></span>%</div>
+
+          </div>
+      </div>
+  </div>
 
 <div class="relic-container">
   <div class="relic-options-container">
@@ -604,7 +649,7 @@ function toggleItems(type) {
         const crit_dmg_new = crit_dmg_now + (- relicStats.dec.main_crit_dmg - relicStats.dec.crit_dmg + relicStats.add.main_crit_dmg + relicStats.add.crit_dmg)/100;
         const elem_bonus_new = elem_bonus_now + (- relicStats.dec.sub_elem_percent + relicStats.add.sub_elem_percent)/100;
         const skill_bonus_new = skill_bonus_now + (- relicStats.dec.normal_skill_bonus - relicStats.dec.strong_skill_bonus - relicStats.dec.skill_skill_bonus - relicStats.dec.ulti_skill_bonus + relicStats.add.normal_skill_bonus + relicStats.add.strong_skill_bonus + relicStats.add.skill_skill_bonus + relicStats.add.ulti_skill_bonus)/100;
-
+       const atk_new = base_atk * (1+atk_percent_new) + flat_atk_new;
 
       
         const new_damage_val = calculate_damage(base_atk, atk_percent_new, flat_atk_new, elem_bonus_new, skill_bonus_new, crit_rate_new, crit_dmg_new, skill_bonus_reduce);
@@ -683,6 +728,41 @@ function toggleItems(type) {
     let good_counts = 0;
 
 
+ //스텟 비교창
+      document.getElementById('stat_compare').addEventListener('change', function() {
+          const statComparison = document.getElementById('stat_comparison');
+          if (this.checked) {
+              statComparison.classList.remove('hidden');
+              updateStatComparison();
+          } else {
+              statComparison.classList.add('hidden');
+          }
+      });
+
+      function updateStatComparison() {
+
+          document.getElementById('current_atk_val').textContent = atk_now;
+          document.getElementById('new_atk_val').textContent = atk_new;
+          document.getElementById('current_crit_rate_val').textContent = (crit_rate_now * 100).toFixed(2);
+          document.getElementById('new_crit_rate_val').textContent = (crit_rate_new * 100).toFixed(2);
+          document.getElementById('current_crit_dmg_val').textContent = (crit_dmg_now * 100).toFixed(2);
+          document.getElementById('new_crit_dmg_val').textContent = (crit_dmg_new * 100).toFixed(2);
+          document.getElementById('current_skill_bonus_val').textContent = (skill_bonus_now * 100).toFixed(2);
+          document.getElementById('new_skill_bonus_val').textContent = (skill_bonus_new * 100).toFixed(2);
+          document.getElementById('current_elem_bonus_val').textContent = (elem_bonus_now * 100).toFixed(2);
+          document.getElementById('new_elem_bonus_val').textContent = (elem_bonus_new * 100).toFixed(2);
+
+      }
+
+      document.querySelectorAll('input').forEach(input => {
+          input.addEventListener('input', function() {
+              if (document.getElementById('stat_compare').checked) {
+                  updateStatComparison();
+              }
+          });
+      });
+
+      
    // Simulation part
 
     const co4_options = ["공퍼", "치확", "치피"];
@@ -800,6 +880,9 @@ function toggleItems(type) {
 
 
 </script>
+
+</body>
+</html>
 
 </body>
 </html>
