@@ -649,7 +649,7 @@ function toggleItems(type) {
         const crit_dmg_new = crit_dmg_now + (- relicStats.dec.main_crit_dmg - relicStats.dec.crit_dmg + relicStats.add.main_crit_dmg + relicStats.add.crit_dmg)/100;
         const elem_bonus_new = elem_bonus_now + (- relicStats.dec.sub_elem_percent + relicStats.add.sub_elem_percent)/100;
         const skill_bonus_new = skill_bonus_now + (- relicStats.dec.normal_skill_bonus - relicStats.dec.strong_skill_bonus - relicStats.dec.skill_skill_bonus - relicStats.dec.ulti_skill_bonus + relicStats.add.normal_skill_bonus + relicStats.add.strong_skill_bonus + relicStats.add.skill_skill_bonus + relicStats.add.ulti_skill_bonus)/100;
-       const atk_new = base_atk * (1+atk_percent_new) + flat_atk_new;
+       const atk_new = (base_atk * (1+atk_percent_new) + flat_atk_new).toFixed(0);
 
       
         const new_damage_val = calculate_damage(base_atk, atk_percent_new, flat_atk_new, elem_bonus_new, skill_bonus_new, crit_rate_new, crit_dmg_new, skill_bonus_reduce);
