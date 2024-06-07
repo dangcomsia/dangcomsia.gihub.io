@@ -160,6 +160,7 @@
         <button onclick="calculate()">Calculate</button><br>
       <label>상단에 에코 교환창 열기<input type="checkbox" id="relic_toggle" name='calcul' onclick="toggleRelicContainer()"> </label>
       <label>추가 옵션창 열기<input type="checkbox" id="option_toggle" name='calcul' onclick="optionContainer()"> </label>
+      <label> 부옵 효율 계산<input type="checkbox" name='calcul' id="effi_cal"></label>
       <label>종결 계산 생략[개빨라짐]<input type="checkbox" name='calcul' id="skip_calculation"></label>
     </div>
 
@@ -180,10 +181,8 @@
         <label><input type="checkbox" id="turtle_set"> 거북이</label>
         <label><input type="checkbox" id="hack_set"> 백로</label><br>
         <label><span>파티 공퍼 돌파<br></span> <input type="number" id="add_atk_percent" value="0" step="0.01"></label>
-        <label><span>파티 속성 돌파<br></span> <input type="number" id="add_elem_percent" value="0" step="0.01"></label>
-        <h4>계산 옵션</h4>
+        <label><span>파티 속성 돌파<br></span> <input type="number" id="add_elem_percent" value="0" step="0.01"></label><br>
         <label><input type="checkbox" name='calcul' id="precise_calculation"> 정확하게 계산하기<br>[3분이상걸림!!]</label>
-        <label><input type="checkbox" name='calcul' id="effi_cal"> 부옵 효율 계산</label>
   </div>
 
     <div class="result-container" id="results">
