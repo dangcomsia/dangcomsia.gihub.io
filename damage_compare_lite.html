@@ -145,7 +145,7 @@
 
 <div class="container">
     <div class="input-container">
-        <h3>띵조 스텟 종합 계산기</h3>
+        <h3>띵조 데미지 계산기</h3>
         <label><span style="font-weight:bold">현재 공격력:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="number" id="atk_now" value="0" step="0.01"></label>
         <label><span style="font-weight:bold">기초 공격력:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="number" id="base_atk" value="0" step="0.01"></label>
         <label><span style="font-weight:bold">크리티컬확률(%):</span> <input type="number" id="crit_rate_now" value="0" step="0.01"></label>
@@ -160,7 +160,7 @@
         <button onclick="calculate()">Calculate</button><br>
       <label>상단에 에코 교환창 열기<input type="checkbox" id="relic_toggle" name='calcul' onclick="toggleRelicContainer()"> </label>
       <label>추가 옵션창 열기<input type="checkbox" id="option_toggle" name='calcul' onclick="optionContainer()"> </label>
-      <label> 부옵 효율 계산<input type="checkbox" name='calcul' id="effi_cal"></label>
+      <label>부옵 효율 계산<input type="checkbox" name='calcul' id="effi_cal"></label>
       <label>종결 계산 생략[개빨라짐]<input type="checkbox" name='calcul' id="skip_calculation"></label>
     </div>
 
@@ -195,7 +195,7 @@
        <div><pre id="damage_ranking"></pre></div>
 
         <div class="class" id="status"></div>
-        <div>에코 변경시 대미지: <span id="new_damage_val"></span> (<span id="damage_change"></span>%)</div>
+        <div>에코 변경시 데미지: <span id="new_damage_val"></span> (<span id="damage_change"></span>%)</div>
 
       <label><input type="checkbox" id="stat_compare" name="stat_compare">스텟 비교창 열기</label>
     </div>
