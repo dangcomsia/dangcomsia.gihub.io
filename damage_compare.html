@@ -468,7 +468,7 @@ const relicValues = {
       add: { flat_atk: 0, atk_percent: 0, crit_rate: 0, crit_dmg: 0, normal_skill_bonus: 0, strong_skill_bonus: 0, skill_skill_bonus: 0, ulti_skill_bonus: 0, main_atk_percent: 0, main_crit_rate: 0, main_crit_dmg: 0, sub_atk_percent:0, sub_elem_percent:0 }
   };
 
-  function toggleRelicContainer() {
+   function toggleRelicContainer() {
       const relicContainer = document.querySelector('.relic-container');
       const checkbox = document.getElementById('relic_toggle');
       if (checkbox.checked) {
@@ -477,7 +477,7 @@ const relicValues = {
           relicContainer.style.display = 'none';
       }
   }
-  
+
 function toggleItems(type) {
     const container = document.getElementById(`${type}-items-container`);
     container.style.display = container.style.display === 'none' ? 'block' : 'none';
@@ -487,6 +487,10 @@ function toggleItems(type) {
       const value = selectElement.value;
       const rangeInput = selectElement.parentElement.querySelector('input[type="range"]');
       const rangeValue = selectElement.parentElement.querySelector('.range-value');
+
+      // Clear previous values
+      const keys = Object.keys(relicValues);
+      keys.forEach(key => relicStats[relicType][key] = 0);
 
       if (value) {
           rangeInput.max = relicValues[value].length - 1;
@@ -500,7 +504,7 @@ function toggleItems(type) {
           relicStats[relicType][value] = 0;
       }
 
-      rangeInput.oninput = function() {
+      rangeInput.oninput = function () {
           rangeValue.textContent = relicValues[value][this.value] + (value.includes('percent') || value.includes('rate') || value.includes('dmg') ? '%' : '');
           relicStats[relicType][value] = relicValues[value][this.value];
       };
@@ -508,6 +512,10 @@ function toggleItems(type) {
 
   function updateRangeValue_main(selectElement, relicType, subOption) {
       const value = selectElement.value;
+
+      // Clear previous main values
+      const keys = Object.keys(mainValues);
+      keys.forEach(key => relicStats[relicType][key] = 0);
 
       if (value) {
           relicStats[relicType][value] = mainValues[value][0];
