@@ -15,54 +15,61 @@
             padding: 5px;
           position: relative;
         }
-        .container {
+          .container {
             display: flex;
             gap: 10px;
-          width: 90%; /* 전체 너비 */
-          flex-direction: column;
-        }
-      .additional-container{
-        flex-direction: column;
-        flex:1;
-      }
-      .input-container, .options-container, .result-container, .relic-container{
-        border: 3px solid #ddd;
-        padding: 10px;
-        border-radius: 10px;
-        background: #ffffff;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      }
-      .additional-container{
-        padding: 5px;
-        margin-top: 5px
-      }
-      .input-container, .relic-container{
-        display: flex;
-         flex-direction: column;
-        gap: 5px;
-        margin-bottom: 10px;
-      }
-
-      .input-container label, .relic-container label{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        
-      }
-
-      .input-container label span, .relic-container label span{
-        text-align: left; /* 텍스트를 좌측 정렬 */
-        flex: 1;
-      }
-      
-      .input-container label input, .relic-container label input {
-        text-align: right; /* 입력 필드를 우측 정렬 */
-        flex: 1;
-        width:100px;
-        padding: 3px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-      }
+            width: 90%; /* 전체 너비 */
+            flex-direction: column;
+          }
+          .additional-container {
+            flex-direction: column;
+            flex: 1;
+          }
+          .input-container, .options-container, .result-container, .relic-container {
+            border: 3px solid #ddd;
+            padding: 10px;
+            border-radius: 10px;
+            background: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          }
+          .additional-container {
+            padding: 5px;
+            margin-top: 5px;
+          }
+          .input-container, .relic-container {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-bottom: 10px;
+          }
+          .options-container {
+            display: none; /* Initially hidden */
+            flex-direction: column;
+            gap: 10px;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+          }
+          .input-container label, .relic-container label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+          .input-container label span, .relic-container label span {
+            text-align: right; /* 텍스트를 좌측 정렬 */
+            font-size: 20px;
+            flex: 5;
+          }
+          .input-container label input, .relic-container label input {
+            text-align: right; /* 입력 필드를 우측 정렬 */
+            display: flex;
+            width: 100px;
+            padding: 3px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 15px;
+            font-weight: bold;
+          }
 
       .options-container label input, .relic-container label input {
           flex: 1;
