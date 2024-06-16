@@ -547,6 +547,16 @@ const relicValues = {
       sub_elem_percent: [30]
   };
 
+let atk_now = 0;
+let atk_new = 0;
+let crit_rate_now = 0;
+let crit_rate_new = 0;
+let crit_dmg_now = 0;
+let crit_dmg_new = 0;
+let skill_bonus_now = 0;
+let skill_bonus_new = 0;
+let elem_bonus_now = 0;
+let elem_bonus_new = 0;
 
   let relicStats = {
       dec: { flat_atk: 0, atk_percent: 0, crit_rate: 0, crit_dmg: 0, normal_skill_bonus: 0, strong_skill_bonus: 0, skill_skill_bonus: 0, ulti_skill_bonus: 0, main_atk_percent: 0, main_crit_rate: 0, main_crit_dmg: 0, sub_atk_percent:0, sub_elem_percent:0 },
@@ -582,8 +592,22 @@ const relicValues = {
     } else {
       statComparison.classList.add('hidden');
     }
-
   }
+
+          function updateStatComparison() {
+
+          document.getElementById('current_atk_val').textContent = atk_now;
+          document.getElementById('new_atk_val').textContent = atk_new;
+          document.getElementById('current_crit_rate_val').textContent = (crit_rate_now * 100).toFixed(2);
+          document.getElementById('new_crit_rate_val').textContent = (crit_rate_new * 100).toFixed(2);
+          document.getElementById('current_crit_dmg_val').textContent = (crit_dmg_now * 100).toFixed(2);
+          document.getElementById('new_crit_dmg_val').textContent = (crit_dmg_new * 100).toFixed(2);
+          document.getElementById('current_skill_bonus_val').textContent = (skill_bonus_now * 100).toFixed(2);
+          document.getElementById('new_skill_bonus_val').textContent = (skill_bonus_new * 100).toFixed(2);
+          document.getElementById('current_elem_bonus_val').textContent = (elem_bonus_now * 100).toFixed(2);
+          document.getElementById('new_elem_bonus_val').textContent = (elem_bonus_new * 100).toFixed(2);
+
+      }
 
   
 function toggleItems(type) {
@@ -651,12 +675,12 @@ function result_on(){
         
       const base_atk = parseFloat(document.getElementById('base_atk').value);
       const skill_bonus_reduce = parseFloat(document.getElementById('skill_bonus_reduce').value) / 100;
-      let atk_now = parseFloat(document.getElementById('atk_now').value);
+      atk_now = parseFloat(document.getElementById('atk_now').value);
       let flat_atk_now = parseFloat(document.getElementById('flat_atk_now').value) / 1;
-      let crit_rate_now = parseFloat(document.getElementById('crit_rate_now').value) / 100;
-      let crit_dmg_now = parseFloat(document.getElementById('crit_dmg_now').value) / 100;
-      let skill_bonus_now = parseFloat(document.getElementById('skill_bonus_now').value) / 100;
-      let elem_bonus_now = parseFloat(document.getElementById('elem_bonus_now').value) / 100;
+      crit_rate_now = parseFloat(document.getElementById('crit_rate_now').value) / 100;
+      crit_dmg_now = parseFloat(document.getElementById('crit_dmg_now').value) / 100;
+      skill_bonus_now = parseFloat(document.getElementById('skill_bonus_now').value) / 100;
+      elem_bonus_now = parseFloat(document.getElementById('elem_bonus_now').value) / 100;
       let energy_recharge_now = parseFloat(document.getElementById('energy_recharge_now').value) / 100;
       let energy_recharge_obj = parseFloat(document.getElementById('energy_recharge_obj').value) / 100;
 
@@ -772,6 +796,7 @@ function result_on(){
         }
 
         // Calculate current damage
+        atk_now = (base_atk * (1+atk_percent_now) + flat_atk_now).toFixed(0);
         const current_damage_val = calculate_damage(base_atk, atk_percent_now, flat_atk_total, elem_bonus_now, skill_bonus_now, crit_rate_now, crit_dmg_now, skill_bonus_reduce);
 
         // Calculate new damage with relics
@@ -779,11 +804,12 @@ function result_on(){
 
         const flat_atk_new = flat_atk_total + (- relicStats.dec.flat_atk + relicStats.add.flat_atk);
         const atk_percent_new = atk_percent_now + (- relicStats.dec.main_atk_percent - relicStats.dec.atk_percent - relicStats.dec.sub_atk_percent + relicStats.add.main_atk_percent + relicStats.add.atk_percent + relicStats.add.sub_atk_percent)/100;
-        const crit_rate_new = crit_rate_now + (- relicStats.dec.main_crit_rate - relicStats.dec.crit_rate + relicStats.add.main_crit_rate + relicStats.add.crit_rate)/100;
-        const crit_dmg_new = crit_dmg_now + (- relicStats.dec.main_crit_dmg - relicStats.dec.crit_dmg + relicStats.add.main_crit_dmg + relicStats.add.crit_dmg)/100;
-        const elem_bonus_new = elem_bonus_now + (- relicStats.dec.sub_elem_percent + relicStats.add.sub_elem_percent)/100;
-        const skill_bonus_new = skill_bonus_now + (- relicStats.dec.normal_skill_bonus - relicStats.dec.strong_skill_bonus - relicStats.dec.skill_skill_bonus - relicStats.dec.ulti_skill_bonus + relicStats.add.normal_skill_bonus + relicStats.add.strong_skill_bonus + relicStats.add.skill_skill_bonus + relicStats.add.ulti_skill_bonus)/100;
-       const atk_new = (base_atk * (1+atk_percent_new) + flat_atk_new).toFixed(0);
+        crit_rate_new = crit_rate_now + (- relicStats.dec.main_crit_rate - relicStats.dec.crit_rate + relicStats.add.main_crit_rate + relicStats.add.crit_rate)/100;
+        crit_dmg_new = crit_dmg_now + (- relicStats.dec.main_crit_dmg - relicStats.dec.crit_dmg + relicStats.add.main_crit_dmg + relicStats.add.crit_dmg)/100;
+        elem_bonus_new = elem_bonus_now + (- relicStats.dec.sub_elem_percent + relicStats.add.sub_elem_percent)/100;
+        skill_bonus_new = skill_bonus_now + (- relicStats.dec.normal_skill_bonus - relicStats.dec.strong_skill_bonus - relicStats.dec.skill_skill_bonus - relicStats.dec.ulti_skill_bonus + relicStats.add.normal_skill_bonus + relicStats.add.strong_skill_bonus + relicStats.add.skill_skill_bonus + relicStats.add.ulti_skill_bonus)/100;
+        atk_new = (base_atk * (1+atk_percent_new) + flat_atk_new).toFixed(0);
+
 
 
 
@@ -866,20 +892,7 @@ function result_on(){
  //스텟 비교창
 
 
-      function updateStatComparison() {
-
-          document.getElementById('current_atk_val').textContent = atk_now;
-          document.getElementById('new_atk_val').textContent = atk_new;
-          document.getElementById('current_crit_rate_val').textContent = (crit_rate_now * 100).toFixed(2);
-          document.getElementById('new_crit_rate_val').textContent = (crit_rate_new * 100).toFixed(2);
-          document.getElementById('current_crit_dmg_val').textContent = (crit_dmg_now * 100).toFixed(2);
-          document.getElementById('new_crit_dmg_val').textContent = (crit_dmg_new * 100).toFixed(2);
-          document.getElementById('current_skill_bonus_val').textContent = (skill_bonus_now * 100).toFixed(2);
-          document.getElementById('new_skill_bonus_val').textContent = (skill_bonus_new * 100).toFixed(2);
-          document.getElementById('current_elem_bonus_val').textContent = (elem_bonus_now * 100).toFixed(2);
-          document.getElementById('new_elem_bonus_val').textContent = (elem_bonus_new * 100).toFixed(2);
-
-      }
+updateStatComparison();
 
 
 
