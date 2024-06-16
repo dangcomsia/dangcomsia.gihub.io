@@ -12,65 +12,42 @@
             align-items: center;
             background: #f0f2f5;
             margin: 0;
-            padding: 5px;
+            padding: 20px;
           position: relative;
         }
-          .container {
+        .container {
             display: flex;
-            gap: 10px;
-            width: 90%; /* 전체 너비 */
-            flex-direction: column;
-          }
-          .additional-container {
-            flex-direction: column;
-            flex: 1;
-          }
-          .input-container, .options-container, .result-container, .relic-container {
-            border: 3px solid #ddd;
-            padding: 10px;
+            gap: 20px;
+        }
+        .input-container, .options-container, .result-container, .relic-container {
+            border: 2px solid #ddd;
+            padding: 20px;
             border-radius: 10px;
             background: #ffffff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-          }
-          .additional-container {
-            padding: 5px;
-            margin-top: 5px;
-          }
-          .input-container, .relic-container {
+        }
+        .input-container, .relic-container {
             display: flex;
             flex-direction: column;
-            gap: 5px;
-            margin-bottom: 10px;
-          }
-          .options-container {
-            display: none; /* Initially hidden */
-            flex-direction: column;
             gap: 10px;
-            position: absolute;
-            top: 20px;
-            right: 20px;
-          }
-          .input-container label, .relic-container label {
+        }
+        .input-container label, .relic-container label {
             display: flex;
             justify-content: space-between;
             align-items: center;
-          }
-          .input-container label span, .relic-container label span {
-            text-align: right; /* 텍스트를 좌측 정렬 */
-            font-size: 20px;
-            flex: 5;
-          }
-          .input-container label input, .relic-container label input {
-            text-align: right; /* 입력 필드를 우측 정렬 */
-            display: flex;
-            width: 100px;
-            padding: 3px;
+        }
+        .input-container label span, .relic-container label span {
+            flex: 2;
+            text-align: right;
+            padding-right: 10px;
+        }
+        .input-container label input{
+            flex: 1;
+            padding: 4px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            font-size: 15px;
-            font-weight: bold;
-          }
-
+            width:30%;
+        }
       .options-container label input, .relic-container label input {
           flex: 1;
           padding: 3px;
@@ -89,9 +66,9 @@
             font-weight: bold;
             color: red;
         }
-        button.calculate-button {
+        button {
             padding: 10px 20px;
-            margin-top: 0px;
+            margin-top: 10px;
             cursor: pointer;
             background: #4CAF50;
             color: #fff;
@@ -100,76 +77,15 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             transition: background 0.3s ease;
         }
-        button.calculate-button:hover {
-            background: red;
+        button:hover {
+            background: #45a049;
         }
-      button.result-button {
-          padding: 10px 20px;
-          margin-top: 3px;
-          margin-bottom: 8px;
-          cursor: pointer;
-          background: #4CAF50;
-          color: #fff;
-          border: none;
-          border-radius: 5px;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-          transition: background 0.3s ease;
-      }
-      button.result-button:hover {
-          background: #45a049;
-      }
-      button.option-button {
-          padding: 10px 25px;
-          margin-top: 20px;
-          margin-bottom: 5px;
-          cursor: pointer;
-          background: #4CAF50;
-          color: #fff;
-          border: none;
-          border-radius: 5px;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-          transition: background 0.3s ease;
-      }
-      button.option-button:hover {
-          background: #45a049;
-      }
-      button.exit-button {
-          padding: 4px 4px;
-          cursor: pointer;
-          background: #fff;
-          color: black;
-          border: none;
-          border-radius: 5px;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-          transition: background 0.3s ease;
-      }
-      button.exit-button:hover {
-          background: red;
-      }
-      .checkbox-label {
-        display: flex;
-        align-items: center; /* 세로(수직) 방향 중앙 정렬 */
-      }
-
-      .checkbox-label input[type="checkbox"] {
-        margin-right: 5px; /* 체크박스 오른쪽 여백 추가 */
-      }
-
-      .checkbox-label span {
-        text-align: left; /* 텍스트 좌측 정렬 */
-      }
         .relic-options {
             display: flex;
             flex-direction: column;
             gap: 20px;
             flex: 1;
         }
-      .relic-container {
-          display: none; /* Initially hidden */
-          position: absolute;
-          top: 20px;
-          left: 20px;
-      }
        .relic-options-container {
           display: flex;
           gap: 20px;
@@ -179,36 +95,11 @@
             flex-direction: column;
             gap: 5px;
         }
-      .options-container{
+      .relic-container {
           display: none; /* Initially hidden */
           position: absolute;
-        flex-direction: column;
-        gap: 1px;
-          top: 20px;
-          right: 20px;
-        line-height:20px
-      }
-      #sub-container {
-        display: none; /* Initially hidden */
-        position: absolute;
-        flex-direction: column;
-        gap: 10px;
-        top: 100px;
-        left: 20px;
-        line-height: 1.5;
-        background: #ffffff; /* Lighter background color */
-        border: 1px solid #ccc;
-        padding: 20px; /* Increased padding for more space */
-        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1); /* Slightly stronger shadow */
-
-        width: 300px;
-        font-family: 'Arial', sans-serif; /* Example font family */
-      }
-
-      #sub-container:hover {
-        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2); /* Shadow effect on hover */
-        transform: translateY(-5px); /* Lift container a bit on hover */
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+          bottom: 20px;
+          left: 20px;
       }
         .range-container input[type="range"] {
             flex: 1;
@@ -239,42 +130,71 @@
       .stat-column {
           display: inline-block;
           vertical-align: top;
-          width: 35%;
+          width: 45%;
           margin-right: 5%;
       }
       .stat-column:last-child {
           margin-right: 0;
       }
+        #sub-container {
+            display: none;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="input-container">
-        <h2>띵조 데미지 계산기</h2>
-        <label><span style="font-weight:bold">현재 공격력:&nbsp;&nbsp;</span> <input type="number" id="atk_now" value="0" step="0.01"></label>
-        <label><span style="font-weight:bold">기초 공격력:&nbsp;&nbsp;</span> <input type="number" id="base_atk" value="0" step="0.01"></label>
-        <label><span style="font-weight:bold">크리 확률(%):&nbsp;&nbsp;</span> <input type="number" id="crit_rate_now" value="0" step="0.01"></label>
-        <label><span style="font-weight:bold">크리 피해(%):&nbsp;&nbsp;</span> <input type="number" id="crit_dmg_now" value="0" step="0.01"></label>
-        <label><span style="font-weight:bold">피해 타입 보너스:&nbsp;&nbsp;</span> <input type="number" id="skill_bonus_now" value="0" step="0.01"></label>
-        <label><span style="font-weight:bold">속성 피해 보너스:&nbsp;&nbsp;</span> <input type="number" id="elem_bonus_now" value="0" step="0.01"></label>
-        <label><span style="font-weight:bold">현재 공명 효율:&nbsp;&nbsp;</span> <input type="number" id="energy_recharge_now" value="100" step="0.01"></label>
-        <label><span style="font-weight:bold">무기 크리 확률:&nbsp;&nbsp;</span> <input type="number" id="crit_rate_weapon" value="0" step="0.01"></label>
-        <label><span style="font-weight:bold">무기 크리 피해:&nbsp;&nbsp;</span> <input type="number" id="crit_dmg_weapon" value="0" step="0.01"></label>
-        <label><span style="font-weight:bold">무기 공격 퍼센트:&nbsp;&nbsp;</span> <input type="number" id="atk_percent_weapon" value="0" step="0.01"></label>
-        <label><span style="font-weight:bold">무기 공명 효율:&nbsp;&nbsp;</span> <input type="number" id="energy_recharge_weapon" value="0" step="0.01"></label>
-      <div class="additional-container" style="text-align: center;">
-        <button  class="option-button" id="relic_toggle" onclick="toggleRelicContainer()" style="display :inline-block;">에코 교환창</button>
-        <button  class="option-button" id="option_toggle" onclick="optionContainer()" style="display :inline-block;">추가 옵션창</button>
-        
-        <button class="option-button" id="sub_toggle" onclick="showSubContainer()">최적세팅계산</button>
+        <h2>띵조 스텟 종합 계산기</h2>
+        <label><span style="font-weight:bold">현재공격력:</span> <input type="number" id="atk_now" value="0" step="0.01"></label>
+        <label><span style="font-weight:bold">기초공격력:</span> <input type="number" id="base_atk" value="0" step="0.01"></label>
+        <label><span style="font-weight:bold">크리 확률(%):</span> <input type="number" id="crit_rate_now" value="0" step="0.01"></label>
+        <label><span style="font-weight:bold">크리 피해(%):</span> <input type="number" id="crit_dmg_now" value="0" step="0.01"></label>
+        <label><span style="font-weight:bold">피해 타입 보너스:<br>(1개만 입력)</span> <input type="number" id="skill_bonus_now" value="0" step="0.01"></label>
+        <label><span style="font-weight:bold">속성 피해 보너스:</span> <input type="number" id="elem_bonus_now" value="0" step="0.01"></label>
+        <label><span style="font-weight:bold">현재 공명 효율:</span> <input type="number" id="energy_recharge_now" value="100" step="0.01"></label>
+        <label><span style="font-weight:bold">무기 크리 확률:</span> <input type="number" id="crit_rate_weapon" value="0" step="0.01"></label>
+        <label><span style="font-weight:bold">무기 크리 피해:</span> <input type="number" id="crit_dmg_weapon" value="0" step="0.01"></label>
+        <label><span style="font-weight:bold">무기 공격 퍼센트:</span> <input type="number" id="atk_percent_weapon" value="0" step="0.01"></label>
+        <label><span style="font-weight:bold">무기 공명 효율:</span> <input type="number" id="energy_recharge_weapon" value="0" step="0.01"></label>
+        <h4>추가 입력</h4>
+        <label><span>깡공(에코 부옵)</span> <input type="number" id="flat_atk_now" value="0" step="0.01"></label>
+        <label><span>피해 타입 딜지분:<br>(0~100%)</span> <input type="number" id="skill_bonus_reduce" value="100" step="0.01"></label>
+        <label><span>최소 공명 효율:</span> <input type="number" id="energy_recharge_obj" value="100" step="0.01"></label>
+        <button onclick="calculate()">Calculate</button>
+    </div>
+
+    <div class="options-container">
+        <h3>추가 옵션</h3>
+        <h4>기본 버프 효과</h4>
+        <label><span>버프 공퍼 추가:<br></span> <input type="number" id="add_atk_percent" value="0" step="0.01"></label><br>
+        <label><span>속성 피증 추가:<br></span> <input type="number" id="add_elem_percent" value="0" step="0.01"></label><br>
+        <label><span>타입 피증 추가:<br></span> <input type="number" id="add_skill_bonus" value="0" step="0.01"></label><br>
+        <label><span>치명 확률 추가:<br></span> <input type="number" id="add_crit_rate" value="0" step="0.01"></label><br>
+        <label><span>치명 피해 추가:<br></span> <input type="number" id="add_crit_dmg" value="0" step="0.01"></label>
+      
+        <h4>에코 버프 효과</h4>
+        <label><input type="checkbox" id="my_set"> 본인 에코 버프</label><br>
+        <label><input type="checkbox" id="light_set"> 광휘셋</label><br>
+        <label><input type="checkbox" id="cloud_set"> 구름셋</label><br>
+        <label><input type="checkbox" id="turtle_set"> 거북이</label><br>
+        <label><input type="checkbox" id="hack_set"> 백로</label><br>
+        <h4>계산 옵션</h4>
+        <label><input type="checkbox" name='calcul' id="effi_cal"> 부옵 효율 계산</label><br>
+      <label><input type="checkbox" name='calcul' id="44111_check"> 44111 체크</label><br>
+      <label><input type="checkbox" id="relic_toggle" name='calcul' onclick="toggleRelicContainer()"> 에코 교환창 열기</label><br><br>
+      <label><input type="checkbox" name='calcul' id="precise_calculation"> 정확한 최대 데미지<br>[3분이상걸림!!]</label><br>
+      <label><input type="checkbox" name='calcul' id="skip_calculation"> 최대 데미지 계산X<br>[빨라짐]<br></label>
+ 
+        <button onclick="showSubContainer()">최적세팅계산</button>
         <div id="sub-container">
             <div>
-              <span style="opacity: 0.5;">모든 추가 옵션 작성 필요<br></span><span>[부옵 개수 설정]<br></span><input type="number" id="substat_count" value="0" step="1">
-            </div><br>
-            <button class="calculate-button" onclick="calculate_sub()">최적계산실행</button><br>
+                 <label><span style="opacity:0.5;">[최적 계산은 모든 옵션을 작성해야 합니다]<br></span></label>
+                <label><span>부옵 개수 설정<br></span> <input type="number" id="substat_count" value="0" step="1"></label>
+            </div>
+            <button onclick="calculate_sub()">최적계산실행</button>
             <div class="results">
-                <h4>최적계산결과</h4>
+                <h2>최적계산결과</h2>
                 <p id="damage"></p>
                 <p id="damage_com"></p>
                 <p id="optimalDamage"></p>
@@ -282,54 +202,35 @@
             </div>
         </div>
         
-        </div>
-      
-        <button class="calculate-button" onclick="calculate()">계산 실행</button>
-      <button  class="result-button" id="result_button"onclick="result_on()" >결과창</button>
-      
 
-      
-      </div>
 
-    <div class="options-container">
-      <h4>추가 선택 입력&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button  class="exit-button" id="option_toggle" onclick="optionContainer()" style="text-align:right">X</button></h4>
-      <label><span>깡공(에코 부옵):<br></span> <input type="number" id="flat_atk_now" value="0" step="0.01"></label>
-      <label><span>피해 타입 딜지분(0~100%)<br></span> <input type="number" id="skill_bonus_reduce" value="100" step="0.01"></label>
-      <label><span>최소 공명 효율:<br></span> <input type="number" id="energy_recharge_obj" value="100" step="0.01"></label>
-      <h4>기본 버프 효과</h4>
-      <label><span>잠재 공퍼 추가:<br></span> <input type="number" id="add_atk_percent" value="0" step="0.01"></label>
-      <label><span>속성 피증 추가:<br></span> <input type="number" id="add_elem_percent" value="0" step="0.01"></label>
-      <label><span>타입 피증 추가:<br></span> <input type="number" id="add_skill_bonus" value="0" step="0.01"></label>
-      <label><span>치명 확률 추가:<br></span> <input type="number" id="add_crit_rate" value="0" step="0.01"></label>
-      <label><span>치명 피해 추가:<br></span> <input type="number" id="add_crit_dmg" value="0" step="0.01"></label>
-
-      <h4>에코 버프 효과</h4>
-      <label><input type="checkbox" id="my_set"> 본인 에코 버프</label>
-      <label><input type="checkbox" id="light_set"> 광휘셋</label>
-      <label><input type="checkbox" id="cloud_set"> 구름셋</label>
-      <label><input type="checkbox" id="turtle_set"> 거북이</label>
-      <label><input type="checkbox" id="hack_set"> 백로</label><br><br>
-
-      <label style="text-align:left"><input type="checkbox" name='calcul' id="44111_check">44111 체크<br></label>
-      <label style="text-align:left"><input type="checkbox" name='calcul' id="effi_cal">부옵 효율 보기<br><br></label>
-
-      <label><input type="checkbox" name='calcul' id="precise_calculation"> 정확한 최대 데미지<br>[3분이상걸림!!]</label>
-      <label style="text-align:left"><input type="checkbox" name='calcul' id="skip_calculation">최대 계산 생략[개빨라짐]</label>
+        
   </div>
 
-    <div class="result-container" id="results" style="display: none;">
-        <h3>결과</h3>
+    <div class="result-container" id="results" style="visibility: hidden;">
+        <h2>Results</h2>
         <div>현재데미지: <span id="current_damage_val"></span></div>
         <div>최대데미지: <span id="max_damage"></span></div>
-        <div><b>현재/최대 데미지: <span id="damage_ratio"></span>%</b></div>
+        <div><b>현재/최대데미지: <span id="damage_ratio"></span>%</b></div>
         <div><b>스텟 추정 점수: <span id="percentile"></span>★</b></div>
 
        <div><pre id="damage_ranking"></pre></div>
 
         <div class="class" id="status"></div>
-        <div>에코 변경시 데미지: <span id="new_damage_val"></span> (<span id="damage_change"></span>%)</div>
-      <button  class="option-button" id="option_toggle" onclick="togglestatComparison()" style="text-align:right">스텟 비교창</button>
+        <div>에코 변경시 대미지: <span id="new_damage_val"></span> (<span id="damage_change"></span>%)</div>
 
+      <label><input type="checkbox" id="stat_compare" name="stat_compare">스텟 비교창 열기</label>
+
+        
+
+
+
+
+
+
+
+
+        
     </div>
 </div>
 
@@ -344,7 +245,7 @@
 
           </div>
           <div class="stat-column">
-              <h4>변경 후&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button  class="exit-button" id="option_toggle" onclick="togglestatComparison()" style="text-align:right">X</button></h4>
+              <h4>변경 후</h4>
               <div>공격력: <span id="new_atk_val"></span></div>
               <div>크리 확률: <span id="new_crit_rate_val"></span>%</div>
               <div>크리 피해: <span id="new_crit_dmg_val"></span>%</div>
@@ -358,8 +259,7 @@
 <div class="relic-container">
   <div class="relic-options-container">
     <div class="relic-options">
-
-        <h3>기존 에코 작성</h3>
+        <h2>기존 에코 작성</h2>
         <label><input type="checkbox" onclick="toggleItems('dec')"> 옵션 표시</label>
         <div id="dec-items-container" style="display:none;">
           <div class="item">
@@ -467,7 +367,7 @@
     </div>
 
     <div class="relic-options">
-        <h3>신규 에코 추가&nbsp;&nbsp;&nbsp;&nbsp;<button  class="exit-button" id="option_toggle" onclick="toggleRelicContainer()" style="text-align:right">X</button></h3>
+        <h2>신규 에코 추가</h2>
         <label><input type="checkbox" onclick="toggleItems('add')"> 옵션 표시</label>
         <div id="add-items-container" style="display:none;">
           <div class="item">
@@ -597,94 +497,46 @@ const relicValues = {
   };
 
 
-  // Initialize stat
-let flat_atk = 0;
-  let crit_rate = 0;
-  let crit_dmg = 0;
-  let skill_bonus = 0;
-  let elem_bonus = 0;
-  let atk_percent = 0;
-
- let base_atk = 0; 
-let  skill_bonus_reduce = 0;
-  
-let atk_now = 0;
-let atk_new = 0;
-let crit_rate_now = 0;
-let crit_rate_new = 0;
-let crit_dmg_now = 0;
-let crit_dmg_new = 0;
-let skill_bonus_now = 0;
-let skill_bonus_new = 0;
-let elem_bonus_now = 0;
-let elem_bonus_new = 0;
-
   let relicStats = {
       dec: { flat_atk: 0, atk_percent: 0, crit_rate: 0, crit_dmg: 0, normal_skill_bonus: 0, strong_skill_bonus: 0, skill_skill_bonus: 0, ulti_skill_bonus: 0, main_atk_percent: 0, main_crit_rate: 0, main_crit_dmg: 0, sub_atk_percent:0, sub_elem_percent:0 },
       add: { flat_atk: 0, atk_percent: 0, crit_rate: 0, crit_dmg: 0, normal_skill_bonus: 0, strong_skill_bonus: 0, skill_skill_bonus: 0, ulti_skill_bonus: 0, main_atk_percent: 0, main_crit_rate: 0, main_crit_dmg: 0, sub_atk_percent:0, sub_elem_percent:0 }
   };
 
-
-  function optionContainer() {
-      const optionContainer = document.querySelector('.options-container');
-      const checkbox = document.getElementById('option_toggle');
-      if (optionContainer.style.display === 'none') {
-        optionContainer.style.display = 'flex';
-      } else {
-        optionContainer.style.display = 'none';
-      }
-  }
+  
 
 
-  function toggleRelicContainer() {
+
+  
+   function toggleRelicContainer() {
       const relicContainer = document.querySelector('.relic-container');
-      if (relicContainer.style.display === 'none') {
+      const checkbox = document.getElementById('relic_toggle');
+      if (checkbox.checked) {
           relicContainer.style.display = 'flex';
       } else {
           relicContainer.style.display = 'none';
       }
   }
 
-  function togglestatComparison() {
-      const statComparison = document.getElementById('stat_comparison');
-    if (statComparison.classList.contains('hidden')) {
-      statComparison.classList.remove('hidden');
-      updateStatComparison();
-    } else {
-      statComparison.classList.add('hidden');
-    }
-  }
-
-  function showSubContainer() {
-      const subContainer = document.getElementById("sub-container");
-      if (subContainer.style.display === "none" || subContainer.style.display === "") {
-          subContainer.style.display = "block";
-      } else {
-          subContainer.style.display = "none";
-      }
-  }
-
-
-          function updateStatComparison() {
-
-          document.getElementById('current_atk_val').textContent = atk_now;
-          document.getElementById('new_atk_val').textContent = atk_new;
-          document.getElementById('current_crit_rate_val').textContent = (crit_rate_now * 100).toFixed(2);
-          document.getElementById('new_crit_rate_val').textContent = (crit_rate_new * 100).toFixed(2);
-          document.getElementById('current_crit_dmg_val').textContent = (crit_dmg_now * 100).toFixed(2);
-          document.getElementById('new_crit_dmg_val').textContent = (crit_dmg_new * 100).toFixed(2);
-          document.getElementById('current_skill_bonus_val').textContent = (skill_bonus_now * 100).toFixed(2);
-          document.getElementById('new_skill_bonus_val').textContent = (skill_bonus_new * 100).toFixed(2);
-          document.getElementById('current_elem_bonus_val').textContent = (elem_bonus_now * 100).toFixed(2);
-          document.getElementById('new_elem_bonus_val').textContent = (elem_bonus_new * 100).toFixed(2);
-
-      }
-
-
 function toggleItems(type) {
     const container = document.getElementById(`${type}-items-container`);
     container.style.display = container.style.display === 'none' ? 'block' : 'none';
 }
+
+
+
+    function showSubContainer() {
+        const subContainer = document.getElementById("sub-container");
+        if (subContainer.style.display === "none" || subContainer.style.display === "") {
+            subContainer.style.display = "block";
+        } else {
+            subContainer.style.display = "none";
+        }
+    }
+
+
+
+
+    
 
   function updateRangeValue(selectElement, relicType, subOption) {
       const value = selectElement.value;
@@ -729,31 +581,51 @@ function toggleItems(type) {
 
 
 
-function result_on(){
-  if (document.getElementById('results').style.display === 'none'){
-    document.getElementById('results').style.display = 'block';
-    document.getElementById('result_button').style.backgroundColor = 'green'
-  }else{
-    document.getElementById('results').style.display = 'none';
-    document.getElementById('result_button').style.backgroundColor = '#4CAF50'
-  }
-
-}
 
 
+      // Initialize stat
+    let base_atk = 0;
+    let skill_bonus_reduce = 0;
+    let atk_now = 0;
+     let flat_atk_now = 0;
+        let crit_rate_now = 0;
+        let crit_dmg_now = 0;
+        let skill_bonus_now = 0;
+    let elem_bonus_now = 0;
+    
+     let   flat_atk = 0;
+     let   crit_rate = 0;
+     let   crit_dmg = 0;
+     let   skill_bonus = 0;
+     let   elem_bonus = 0;
+     let   atk_percent = 0;
+     let   energy_recharge = 0;
 
-      function calculate() {
+    const calculate_damage = (base_atk, atk_percent, flat_atk, elem_bonus, skill_bonus, crit_rate, crit_dmg, skill_bonus_reduce) => {
+        let total_atk = base_atk * (1 + atk_percent) + flat_atk;
+        if (crit_rate_now <= 1) {
+            return total_atk * (1 + elem_bonus + skill_bonus * skill_bonus_reduce) * (crit_rate * crit_dmg + 1 - crit_rate) / 2;
+        } else {
+            return total_atk * (1 + elem_bonus + skill_bonus * skill_bonus_reduce) * (crit_dmg) / 2;
+        }
+    };
+        
 
-      base_atk = parseFloat(document.getElementById('base_atk').value);
-      skill_bonus_reduce = parseFloat(document.getElementById('skill_bonus_reduce').value) / 100;
-      atk_now = parseFloat(document.getElementById('atk_now').value);
-      let flat_atk_now = parseFloat(document.getElementById('flat_atk_now').value) / 1;
-      crit_rate_now = parseFloat(document.getElementById('crit_rate_now').value) / 100;
-      crit_dmg_now = parseFloat(document.getElementById('crit_dmg_now').value) / 100;
-      skill_bonus_now = parseFloat(document.getElementById('skill_bonus_now').value) / 100;
-      elem_bonus_now = parseFloat(document.getElementById('elem_bonus_now').value) / 100;
-      let energy_recharge_now = parseFloat(document.getElementById('energy_recharge_now').value) / 100;
-      let energy_recharge_obj = parseFloat(document.getElementById('energy_recharge_obj').value) / 100;
+
+    function calculate() {
+
+      document.getElementById('results').style.visibility = 'visible';
+      
+        base_atk = parseFloat(document.getElementById('base_atk').value);
+        skill_bonus_reduce = parseFloat(document.getElementById('skill_bonus_reduce').value) / 100;
+        atk_now = parseFloat(document.getElementById('atk_now').value);
+        flat_atk_now = parseFloat(document.getElementById('flat_atk_now').value) / 1;
+        crit_rate_now = parseFloat(document.getElementById('crit_rate_now').value) / 100;
+        crit_dmg_now = parseFloat(document.getElementById('crit_dmg_now').value) / 100;
+        skill_bonus_now = parseFloat(document.getElementById('skill_bonus_now').value) / 100;
+        elem_bonus_now = parseFloat(document.getElementById('elem_bonus_now').value) / 100;
+        energy_recharge_now = parseFloat(document.getElementById('energy_recharge_now').value) / 100;
+        energy_recharge_obj = parseFloat(document.getElementById('energy_recharge_obj').value) / 100;
 
 
         if (energy_recharge_now < energy_recharge_obj) {
@@ -765,7 +637,6 @@ function result_on(){
         const crit_dmg_weapon = parseFloat(document.getElementById('crit_dmg_weapon').value) / 100;
         const atk_percent_weapon = parseFloat(document.getElementById('atk_percent_weapon').value) / 100;
         const energy_recharge_weapon = parseFloat(document.getElementById('energy_recharge_weapon').value) / 100;
-
 
         let add_atk_percent = parseFloat(document.getElementById('add_atk_percent').value) / 100;
         let add_elem_percent = parseFloat(document.getElementById('add_elem_percent').value) / 100;
@@ -786,24 +657,28 @@ function result_on(){
         }
 
 
-        // Initialize stat
-        flat_atk = 350;
-        crit_rate = 0.05 + crit_rate_weapon;
-        crit_dmg = 1.5 + crit_dmg_weapon;
-        skill_bonus = 0;
-        elem_bonus = 0.4;
-        atk_percent = 0.36 + atk_percent_weapon;
-        let energy_recharge = 1.0 + energy_recharge_weapon;
 
-        if (document.getElementById('44111_check').checked) {
-          flat_atk -= 50;
-          atk_percent += 0.18;
-        } 
 
-        let flat_atk_total = flat_atk + flat_atk_now;
 
-        let atk_percent_now = ((atk_now - flat_atk_total) / base_atk) - 1;
+      // Initialize stat
+flat_atk = 350;
+  crit_rate = 0.05 + crit_rate_weapon;
+ crit_dmg = 1.5 + crit_dmg_weapon;
+ skill_bonus = 0;
+    elem_bonus = 0.4;
+    atk_percent = 0.36 + atk_percent_weapon;
+  energy_recharge = 1.0 + energy_recharge_weapon;
 
+      if (document.getElementById('44111_check').checked) {
+        flat_atk -= 50;
+        atk_percent += 0.18;
+
+      } 
+
+      let flat_atk_total = flat_atk + flat_atk_now;
+
+      let atk_percent_now = ((atk_now - flat_atk_total) / base_atk) - 1;
+      
         elem_bonus_now += add_elem_percent;
         elem_bonus += add_elem_percent;
 
@@ -843,14 +718,7 @@ function result_on(){
 
 
 
-        const calculate_damage = (base_atk, atk_percent, flat_atk, elem_bonus, skill_bonus, crit_rate, crit_dmg, skill_bonus_reduce) => {
-            let total_atk = base_atk * (1 + atk_percent) + flat_atk;
-            if (crit_rate_now <= 1) {
-                return total_atk * (1 + elem_bonus + skill_bonus * skill_bonus_reduce) * (crit_rate * crit_dmg + 1 - crit_rate) / 2;
-            } else {
-                return total_atk * (1 + elem_bonus + skill_bonus * skill_bonus_reduce) * (crit_dmg) / 2;
-            }
-        };
+
 
         atk_percent += add_atk_percent;
         atk_percent_now += add_atk_percent;
@@ -867,25 +735,24 @@ function result_on(){
         }
 
         // Calculate current damage
-        atk_now = (base_atk * (1+atk_percent_now) + flat_atk_now).toFixed(0);
         const current_damage_val = calculate_damage(base_atk, atk_percent_now, flat_atk_total, elem_bonus_now, skill_bonus_now, crit_rate_now, crit_dmg_now, skill_bonus_reduce);
-
+        atk_now = (base_atk * (1+atk_percent_now) + flat_atk_total).toFixed(0);
+        
         // Calculate new damage with relics
       console.log("relicStats:", relicStats);
 
         const flat_atk_new = flat_atk_total + (- relicStats.dec.flat_atk + relicStats.add.flat_atk);
         const atk_percent_new = atk_percent_now + (- relicStats.dec.main_atk_percent - relicStats.dec.atk_percent - relicStats.dec.sub_atk_percent + relicStats.add.main_atk_percent + relicStats.add.atk_percent + relicStats.add.sub_atk_percent)/100;
-        crit_rate_new = crit_rate_now + (- relicStats.dec.main_crit_rate - relicStats.dec.crit_rate + relicStats.add.main_crit_rate + relicStats.add.crit_rate)/100;
-        crit_dmg_new = crit_dmg_now + (- relicStats.dec.main_crit_dmg - relicStats.dec.crit_dmg + relicStats.add.main_crit_dmg + relicStats.add.crit_dmg)/100;
-        elem_bonus_new = elem_bonus_now + (- relicStats.dec.sub_elem_percent + relicStats.add.sub_elem_percent)/100;
-        skill_bonus_new = skill_bonus_now + (- relicStats.dec.normal_skill_bonus - relicStats.dec.strong_skill_bonus - relicStats.dec.skill_skill_bonus - relicStats.dec.ulti_skill_bonus + relicStats.add.normal_skill_bonus + relicStats.add.strong_skill_bonus + relicStats.add.skill_skill_bonus + relicStats.add.ulti_skill_bonus)/100;
-        atk_new = (base_atk * (1+atk_percent_new) + flat_atk_new).toFixed(0);
-
-
+        const crit_rate_new = crit_rate_now + (- relicStats.dec.main_crit_rate - relicStats.dec.crit_rate + relicStats.add.main_crit_rate + relicStats.add.crit_rate)/100;
+        const crit_dmg_new = crit_dmg_now + (- relicStats.dec.main_crit_dmg - relicStats.dec.crit_dmg + relicStats.add.main_crit_dmg + relicStats.add.crit_dmg)/100;
+        const elem_bonus_new = elem_bonus_now + (- relicStats.dec.sub_elem_percent + relicStats.add.sub_elem_percent)/100;
+        const skill_bonus_new = skill_bonus_now + (- relicStats.dec.normal_skill_bonus - relicStats.dec.strong_skill_bonus - relicStats.dec.skill_skill_bonus - relicStats.dec.ulti_skill_bonus + relicStats.add.normal_skill_bonus + relicStats.add.strong_skill_bonus + relicStats.add.skill_skill_bonus + relicStats.add.ulti_skill_bonus)/100;
+       const atk_new = (base_atk * (1+atk_percent_new) + flat_atk_new).toFixed(0);
 
 
         const new_damage_val = calculate_damage(base_atk, atk_percent_new, flat_atk_new, elem_bonus_new, skill_bonus_new, crit_rate_new, crit_dmg_new, skill_bonus_reduce);
-
+        
+        console.log("공퍼 깡공 튜공퍼 튜깡공",atk_percent_now, flat_atk_total, atk_percent_new, flat_atk_new);
 
 
 
@@ -940,7 +807,7 @@ function result_on(){
       console.log("damage_values:", damage_values);
 
       if (document.getElementById('effi_cal').checked) {
-          ranking = '부옵: 딜 증가량(효율)\n';
+          ranking = '부옵당 딜 증가량(효율%)\n';
           damage_values.forEach(damage => {
               let increase_percent = (damage.value / current_damage_val * 100).toFixed(2);
               let relative_percent = (damage.value / max_increase * 100).toFixed(2);
@@ -961,13 +828,48 @@ function result_on(){
 
 
  //스텟 비교창
+      document.getElementById('stat_compare').addEventListener('change', function() {
+          const statComparison = document.getElementById('stat_comparison');
+          if (this.checked) {
+              statComparison.classList.remove('hidden');
+              updateStatComparison();
+          } else {
+              statComparison.classList.add('hidden');
+          }
+      });
+        console.log("총공격력_after",atk_now);
+      function updateStatComparison() {
+
+          document.getElementById('current_atk_val').textContent = atk_now;
+          document.getElementById('new_atk_val').textContent = atk_new;
+          document.getElementById('current_crit_rate_val').textContent = (crit_rate_now * 100).toFixed(2);
+          document.getElementById('new_crit_rate_val').textContent = (crit_rate_new * 100).toFixed(2);
+          document.getElementById('current_crit_dmg_val').textContent = (crit_dmg_now * 100).toFixed(2);
+          document.getElementById('new_crit_dmg_val').textContent = (crit_dmg_new * 100).toFixed(2);
+          document.getElementById('current_skill_bonus_val').textContent = (skill_bonus_now * 100).toFixed(2);
+          document.getElementById('new_skill_bonus_val').textContent = (skill_bonus_new * 100).toFixed(2);
+          document.getElementById('current_elem_bonus_val').textContent = (elem_bonus_now * 100).toFixed(2);
+          document.getElementById('new_elem_bonus_val').textContent = (elem_bonus_new * 100).toFixed(2);
+
+      }
+
+      document.querySelectorAll('input').forEach(input => {
+          input.addEventListener('input', function() {
+              if (document.getElementById('stat_compare').checked) {
+                  updateStatComparison();
+              }
+          });
+      });
 
 
-updateStatComparison();
 
 
 
 
+
+
+
+      
    // Simulation part
 
     const co4_options = ["공퍼", "치확", "치피"];
@@ -1057,7 +959,22 @@ updateStatComparison();
         }
     }
 
+      
 
+    // document.getElementById('부옵계산실행').checked
+
+
+
+
+
+      
+
+
+ 
+
+
+
+      
 
 
 
@@ -1088,236 +1005,232 @@ updateStatComparison();
 
 
 
-       function calculate_sub() {
-             calculate();
-           if (document.getElementById('44111_check').checked) {
-             flat_atk += 50;
-             atk_percent -= 0.18;
-           } 
-console.log(base_atk, skill_bonus_reduce, flat_atk ,
-           crit_rate 
-           , crit_dmg 
-           , skill_bonus
-           , elem_bonus 
-           , atk_percent);
-
-            const calculate_damage = (base_atk, atk_percent, flat_atk, elem_bonus, skill_bonus, crit_rate, crit_dmg, skill_bonus_reduce) => {
-                let total_atk = base_atk * (1 + atk_percent) + flat_atk;
-                if (crit_rate_now <= 1) {
-                    return total_atk * (1 + elem_bonus + skill_bonus * skill_bonus_reduce) * (crit_rate * crit_dmg + 1 - crit_rate) / 2;
-                } else {
-                    return total_atk * (1 + elem_bonus + skill_bonus * skill_bonus_reduce) * (crit_dmg) / 2;
-                }
-            };
 
 
-                  const subOptions = {
-                      "깡공": 50,
-                      "공퍼": 0.09,
-                      "치확": 0.084,
-                      "치피": 0.168,
-                      "피증": 0.09
-                  };
-
-      subOptionCount = document.getElementById('substat_count').value;
-
-                  let maxDamage_43 = 0;   
-                  let bestCombination_43 = {};
-
-                  let maxDamage_44 = 0;   
-                  let bestCombination_44 = {};
+     function calculate_sub() {
+           calculate();
+         if (document.getElementById('44111_check').checked) {
+           flat_atk += 50;
+           atk_percent -= 0.18;
+         } 
 
 
-               for (let i = 0; i < 100000; i++) {
-                      let currentFlatAtk = flat_atk;
-                      let currentAtkPercent = atk_percent;
-                      let currentCritRate = crit_rate;
-                      let currentCritDmg = crit_dmg;
-                      let currentElemBonus = elem_bonus;
-                      let currentSkillBonus = skill_bonus;
-
-                   const co4Options = ["공퍼", "치확", "치피"];
-                   const co3Options = ["공퍼", "속성피증"];
-                   let selectedCo4 = [];
-                   let selectedCo3 = [];
-
-                          selectedCo4 = co4Options[Math.floor(Math.random() * co4Options.length)];
-                          if (selectedCo4 === "공퍼") {
-                              currentAtkPercent += 0.33;
-                          } else if (selectedCo4 === "치확") {
-                              currentCritRate += 0.22;
-                          } else if (selectedCo4 === "치피") {
-                              currentCritDmg += 0.44;
-                          }
-                          for (let j = 0; j < 2; j++) {
-                              const selectedCo3Option = co3Options[Math.floor(Math.random() * co3Options.length)];
-                              if (selectedCo3Option === "공퍼") {
-                                  currentAtkPercent += 0.3;
-                              } else if (selectedCo3Option === "속성피증") {
-                                  currentElemBonus += 0.3;
-                              } 
-                              selectedCo3.push(selectedCo3Option);
-                          }
-
-                      const subOptionCounts = { "깡공": 0, "공퍼": 0, "치확": 0, "치피": 0, "피증": 0 };
-
-                      while (Object.values(subOptionCounts).reduce((a, b) => a + b, 0) < subOptionCount) {
-                          const subOptionChoice = Object.keys(subOptions)[Math.floor(Math.random() * Object.keys(subOptions).length)];
-                          if (subOptionCounts[subOptionChoice] < 6) {
-                              subOptionCounts[subOptionChoice]++;
-                          }
-                      }                
-
-
-                      for (const [opt, count] of Object.entries(subOptionCounts)) {
-                          if (opt === "깡공") {
-                              currentFlatAtk += subOptions[opt] * count;
-                          } else if (opt === "공퍼") {
-                              currentAtkPercent += subOptions[opt] * count;
-                          } else if (opt === "치확") {
-                              currentCritRate += subOptions[opt] * count;
-                          } else if (opt === "치피") {
-                              currentCritDmg += subOptions[opt] * count;
-                          } else if (opt === "기능피증") {
-                                  currentSkillBonus += subOptions[opt] * count;
-                          }
-                      }
-
-      const damage_43 = calculate_damage(base_atk, currentAtkPercent, currentFlatAtk, currentElemBonus, currentSkillBonus, currentCritRate, currentCritDmg, skill_bonus_reduce);
-
-                      if (damage_43 > maxDamage_43) {
-                          maxDamage_43 = damage_43;
-                          bestCombination_43 = {
-                              "4코옵션": selectedCo4 ? selectedCo4 : `${selectedCo4} 2개`,
-                              "3코옵션": selectedCo3,
-                              "부옵션": subOptionCounts,
-                              "기초공": base_atk,
-                              "공격력": Math.floor(base_atk * (1 + currentAtkPercent) + currentFlatAtk),
-                              "치확": currentCritRate,
-                              "치피": currentCritDmg,
-                              "속성피증": currentElemBonus,
-                              "타입피증": currentSkillBonus,
-                              "부옵개수": subOptionCount
-                          };
-                      }
-                  }
-
-
-
-
-      for (let i = 0; i < 100000; i++) {
-                      let currentFlatAtk = flat_atk-50;
-                      let currentAtkPercent = atk_percent+0.18;
-                      let currentCritRate = crit_rate;
-                      let currentCritDmg = crit_dmg;
-                      let currentElemBonus = elem_bonus;
-                      let currentSkillBonus = skill_bonus;
-
-           const co4Options = ["공퍼", "치확", "치피"];
-           const co3Options = ["공퍼", "속성피증"];
-           let selectedCo4 = [];
-           let selectedCo3 = [];
-
-      for (let j = 0; j < 2; j++) {
-                              const selectedCo4Option = co4Options[Math.floor(Math.random() * co4Options.length)];
-                              if (selectedCo4Option === "공퍼") {
-                                  currentAtkPercent += 0.33;
-                              } else if (selectedCo4Option === "치확") {
-                                  currentCritRate += 0.22;
-                              } else if (selectedCo4Option === "치피") {
-                                  currentCritDmg += 0.44;
-                              }
-                              selectedCo4.push(selectedCo4Option);
-      }
-
-                      const subOptionCounts = { "깡공": 0, "공퍼": 0, "치확": 0, "치피": 0, "피증": 0 };
-
-                      while (Object.values(subOptionCounts).reduce((a, b) => a + b, 0) < subOptionCount) {
-                          const subOptionChoice = Object.keys(subOptions)[Math.floor(Math.random() * Object.keys(subOptions).length)];
-                          if (subOptionCounts[subOptionChoice] < 6) {
-                              subOptionCounts[subOptionChoice]++;
-                          }
-                      }                
-
-
-                      for (const [opt, count] of Object.entries(subOptionCounts)) {
-                          if (opt === "깡공") {
-                              currentFlatAtk += subOptions[opt] * count;
-                          } else if (opt === "공퍼") {
-                              currentAtkPercent += subOptions[opt] * count;
-                          } else if (opt === "치확") {
-                              currentCritRate += subOptions[opt] * count;
-                          } else if (opt === "치피") {
-                              currentCritDmg += subOptions[opt] * count;
-                          } else if (opt === "기능피증") {
-                                  currentSkillBonus += subOptions[opt] * count;
-                          }
-                      }
-
-      const damage_44 = calculate_damage(base_atk, currentAtkPercent, currentFlatAtk, currentElemBonus, currentSkillBonus, currentCritRate, currentCritDmg, skill_bonus_reduce);
-
-                      if (damage_44 > maxDamage_44) {
-                          maxDamage_44 = damage_44;
-                          bestCombination_44 = {
-                              "4코옵션": selectedCo4 ? selectedCo4 : `${selectedCo4} 2개`,
-                              "3코옵션": selectedCo3,
-                              "부옵션": subOptionCounts,
-                              "기초공": base_atk,
-                              "공격력": Math.floor(base_atk * (1 + currentAtkPercent) + currentFlatAtk),
-                              "치확": currentCritRate,
-                              "치피": currentCritDmg,
-                              "속성피증": currentElemBonus,
-                              "타입피증": currentSkillBonus,
-                              "부옵개수": subOptionCount
-                          };
-                      }
-                  }
-
-
-      if (maxDamage_43 >= maxDamage_44){
-                  document.getElementById('damage').innerText = `44111 < ["43311" 최대데미지: ${Math.floor(maxDamage_43)}]`;
-                  document.getElementById('damage_com').innerText = `44111 최대데미지: ${Math.floor(maxDamage_44)}(백분율:${(maxDamage_44/maxDamage_43).toFixed(2) * 100}%)`;
-                  document.getElementById('optimalCombination').innerHTML = `
-                      최적 부옵(${bestCombination_43["부옵개수"]}) 조합:<br>
-                      4코옵션: ${bestCombination_43["4코옵션"]}<br>
-                      3코옵션: ${bestCombination_43["3코옵션"].join(', ')}<br>
-                      부옵션: ${JSON.stringify(bestCombination_43["부옵션"])}<br>
-                      기초공격력: ${bestCombination_43["기초공"]}<br>
-                      공격력: ${bestCombination_43["공격력"]} (${bestCombination_43["기초공"]} * ${Math.floor(1 + bestCombination_43["공격력"] / bestCombination_43["기초공"] - 1)} + ${bestCombination_43["공격력"] - bestCombination_43["기초공"]})<br>
-                      치확: ${(bestCombination_43["치확"] * 100).toFixed(2)}%<br>
-                      치피: ${(bestCombination_43["치피"] * 100).toFixed(2)}%<br>
-                      속성피증: ${(bestCombination_43["속성피증"] * 100).toFixed(2)}%<br>
-                      타입피증: ${(bestCombination_43["타입피증"] * 100).toFixed(2)}%
-                  `;
+          const calculate_damage = (base_atk, atk_percent, flat_atk, elem_bonus, skill_bonus, crit_rate, crit_dmg, skill_bonus_reduce) => {
+              let total_atk = base_atk * (1 + atk_percent) + flat_atk;
+              if (crit_rate_now <= 1) {
+                  return total_atk * (1 + elem_bonus + skill_bonus * skill_bonus_reduce) * (crit_rate * crit_dmg + 1 - crit_rate) / 2;
+              } else {
+                  return total_atk * (1 + elem_bonus + skill_bonus * skill_bonus_reduce) * (crit_dmg) / 2;
               }
-      else if (maxDamage_44 >= maxDamage_43) {
-                  document.getElementById('damage').innerText = `43311 < ["44111" 최대데미 ${Math.floor(maxDamage_44)}]`;
-                  document.getElementById('damage_com').innerText = `43311 최대데미지: ${Math.floor(maxDamage_43)}(백분율:${(maxDamage_43/maxDamage_44).toFixed(2) * 100}%)`;
-                  document.getElementById('damage_44').innerText = `현재 데미지: ${Math.floor(maxDamage_44)}`;
-                  document.getElementById('optimalCombination').innerHTML = `
-                      최적 부옵(${bestCombination_44["부옵개수"]}) 조합:<br>
-                      4코옵션: ${bestCombination_44["4코옵션"]}<br>
-                      3코옵션: ${bestCombination_44["3코옵션"].join(', ')}<br>
-                      부옵션: ${JSON.stringify(bestCombination_44["부옵션"])}<br>
-                      기초공격력: ${bestCombination_44["기초공"]}<br>
-                      공격력: ${bestCombination_44["공격력"]} (${bestCombination_44["기초공"]} * ${Math.floor(1 + bestCombination_44["공격력"] / bestCombination_44["기초공"] - 1)} + ${bestCombination_44["공격력"] - bestCombination_44["기초공"]})<br>
-                      치확: ${(bestCombination_44["치확"] * 100).toFixed(2)}%<br>
-                      치피: ${(bestCombination_44["치피"] * 100).toFixed(2)}%<br>
-                      속성피증: ${(bestCombination_44["속성피증"] * 100).toFixed(2)}%<br>
-                      타입피증: ${(bestCombination_44["타입피증"] * 100).toFixed(2)}%
-      `;
-      }
-
-  }
+          };
 
 
+                const subOptions = {
+                    "깡공": 50,
+                    "공퍼": 0.09,
+                    "치확": 0.084,
+                    "치피": 0.168,
+                    "피증": 0.09
+                };
+
+    subOptionCount = document.getElementById('substat_count').value;
+
+                let maxDamage_43 = 0;   
+                let bestCombination_43 = {};
+
+                let maxDamage_44 = 0;   
+                let bestCombination_44 = {};
+
+
+             for (let i = 0; i < 100000; i++) {
+                    let currentFlatAtk = flat_atk;
+                    let currentAtkPercent = atk_percent;
+                    let currentCritRate = crit_rate;
+                    let currentCritDmg = crit_dmg;
+                    let currentElemBonus = elem_bonus;
+                    let currentSkillBonus = skill_bonus;
+
+                 const co4Options = ["공퍼", "치확", "치피"];
+                 const co3Options = ["공퍼", "속성피증"];
+                 let selectedCo4 = [];
+                 let selectedCo3 = [];
+
+                        selectedCo4 = co4Options[Math.floor(Math.random() * co4Options.length)];
+                        if (selectedCo4 === "공퍼") {
+                            currentAtkPercent += 0.33;
+                        } else if (selectedCo4 === "치확") {
+                            currentCritRate += 0.22;
+                        } else if (selectedCo4 === "치피") {
+                            currentCritDmg += 0.44;
+                        }
+                        for (let j = 0; j < 2; j++) {
+                            const selectedCo3Option = co3Options[Math.floor(Math.random() * co3Options.length)];
+                            if (selectedCo3Option === "공퍼") {
+                                currentAtkPercent += 0.3;
+                            } else if (selectedCo3Option === "속성피증") {
+                                currentElemBonus += 0.3;
+                            } 
+                            selectedCo3.push(selectedCo3Option);
+                        }
+
+                    const subOptionCounts = { "깡공": 0, "공퍼": 0, "치확": 0, "치피": 0, "피증": 0 };
+
+                    while (Object.values(subOptionCounts).reduce((a, b) => a + b, 0) < subOptionCount) {
+                        const subOptionChoice = Object.keys(subOptions)[Math.floor(Math.random() * Object.keys(subOptions).length)];
+                        if (subOptionCounts[subOptionChoice] < 6) {
+                            subOptionCounts[subOptionChoice]++;
+                        }
+                    }                
+
+
+                    for (const [opt, count] of Object.entries(subOptionCounts)) {
+                        if (opt === "깡공") {
+                            currentFlatAtk += subOptions[opt] * count;
+                        } else if (opt === "공퍼") {
+                            currentAtkPercent += subOptions[opt] * count;
+                        } else if (opt === "치확") {
+                            currentCritRate += subOptions[opt] * count;
+                        } else if (opt === "치피") {
+                            currentCritDmg += subOptions[opt] * count;
+                        } else if (opt === "기능피증") {
+                                currentSkillBonus += subOptions[opt] * count;
+                        }
+                    }
+
+    const damage_43 = calculate_damage(base_atk, currentAtkPercent, currentFlatAtk, currentElemBonus, currentSkillBonus, currentCritRate, currentCritDmg, skill_bonus_reduce);
+
+                    if (damage_43 > maxDamage_43) {
+                        maxDamage_43 = damage_43;
+                        bestCombination_43 = {
+                            "4코옵션": selectedCo4 ? selectedCo4 : `${selectedCo4} 2개`,
+                            "3코옵션": selectedCo3,
+                            "부옵션": subOptionCounts,
+                            "기초공": base_atk,
+                            "공격력": Math.floor(base_atk * (1 + currentAtkPercent) + currentFlatAtk),
+                            "치확": currentCritRate,
+                            "치피": currentCritDmg,
+                            "속성피증": currentElemBonus,
+                            "타입피증": currentSkillBonus,
+                            "부옵개수": subOptionCount
+                        };
+                    }
+                }
 
 
 
 
+    for (let i = 0; i < 100000; i++) {
+                    let currentFlatAtk = flat_atk-50;
+                    let currentAtkPercent = atk_percent+0.18;
+                    let currentCritRate = crit_rate;
+                    let currentCritDmg = crit_dmg;
+                    let currentElemBonus = elem_bonus;
+                    let currentSkillBonus = skill_bonus;
+        
+         const co4Options = ["공퍼", "치확", "치피"];
+         const co3Options = ["공퍼", "속성피증"];
+         let selectedCo4 = [];
+         let selectedCo3 = [];
+
+    for (let j = 0; j < 2; j++) {
+                            const selectedCo4Option = co4Options[Math.floor(Math.random() * co4Options.length)];
+                            if (selectedCo4Option === "공퍼") {
+                                currentAtkPercent += 0.33;
+                            } else if (selectedCo4Option === "치확") {
+                                currentCritRate += 0.22;
+                            } else if (selectedCo4Option === "치피") {
+                                currentCritDmg += 0.44;
+                            }
+                            selectedCo4.push(selectedCo4Option);
+    }
+
+                    const subOptionCounts = { "깡공": 0, "공퍼": 0, "치확": 0, "치피": 0, "피증": 0 };
+
+                    while (Object.values(subOptionCounts).reduce((a, b) => a + b, 0) < subOptionCount) {
+                        const subOptionChoice = Object.keys(subOptions)[Math.floor(Math.random() * Object.keys(subOptions).length)];
+                        if (subOptionCounts[subOptionChoice] < 6) {
+                            subOptionCounts[subOptionChoice]++;
+                        }
+                    }                
 
 
-  
+                    for (const [opt, count] of Object.entries(subOptionCounts)) {
+                        if (opt === "깡공") {
+                            currentFlatAtk += subOptions[opt] * count;
+                        } else if (opt === "공퍼") {
+                            currentAtkPercent += subOptions[opt] * count;
+                        } else if (opt === "치확") {
+                            currentCritRate += subOptions[opt] * count;
+                        } else if (opt === "치피") {
+                            currentCritDmg += subOptions[opt] * count;
+                        } else if (opt === "기능피증") {
+                                currentSkillBonus += subOptions[opt] * count;
+                        }
+                    }
+
+    const damage_44 = calculate_damage(base_atk, currentAtkPercent, currentFlatAtk, currentElemBonus, currentSkillBonus, currentCritRate, currentCritDmg, skill_bonus_reduce);
+
+                    if (damage_44 > maxDamage_44) {
+                        maxDamage_44 = damage_44;
+                        bestCombination_44 = {
+                            "4코옵션": selectedCo4 ? selectedCo4 : `${selectedCo4} 2개`,
+                            "3코옵션": selectedCo3,
+                            "부옵션": subOptionCounts,
+                            "기초공": base_atk,
+                            "공격력": Math.floor(base_atk * (1 + currentAtkPercent) + currentFlatAtk),
+                            "치확": currentCritRate,
+                            "치피": currentCritDmg,
+                            "속성피증": currentElemBonus,
+                            "타입피증": currentSkillBonus,
+                            "부옵개수": subOptionCount
+                        };
+                    }
+                }
+
+
+    if (maxDamage_43 >= maxDamage_44){
+                document.getElementById('damage').innerText = `44111 < ["43311" 최대데미지: ${Math.floor(maxDamage_43)}]`;
+                document.getElementById('damage_com').innerText = `44111 최대데미지: ${Math.floor(maxDamage_44)}(백분율:${(maxDamage_44/maxDamage_43).toFixed(2) * 100}%)`;
+                document.getElementById('optimalCombination').innerHTML = `
+                    최적 부옵(${bestCombination_43["부옵개수"]}) 조합:<br>
+                    4코옵션: ${bestCombination_43["4코옵션"]}<br>
+                    3코옵션: ${bestCombination_43["3코옵션"].join(', ')}<br>
+                    부옵션: ${JSON.stringify(bestCombination_43["부옵션"])}<br>
+                    기초공격력: ${bestCombination_43["기초공"]}<br>
+                    공격력: ${bestCombination_43["공격력"]} (${bestCombination_43["기초공"]} * ${Math.floor(1 + bestCombination_43["공격력"] / bestCombination_43["기초공"] - 1)} + ${bestCombination_43["공격력"] - bestCombination_43["기초공"]})<br>
+                    치확: ${(bestCombination_43["치확"] * 100).toFixed(2)}%<br>
+                    치피: ${(bestCombination_43["치피"] * 100).toFixed(2)}%<br>
+                    속성피증: ${(bestCombination_43["속성피증"] * 100).toFixed(2)}%<br>
+                    타입피증: ${(bestCombination_43["타입피증"] * 100).toFixed(2)}%
+                `;
+            }
+    else if (maxDamage_44 >= maxDamage_43) {
+                document.getElementById('damage').innerText = `43311 < ["44111" 최대데미 ${Math.floor(maxDamage_44)}]`;
+                document.getElementById('damage_com').innerText = `43311 최대데미지: ${Math.floor(maxDamage_43)}(백분율:${(maxDamage_43/maxDamage_44).toFixed(2) * 100}%)`;
+                document.getElementById('damage_44').innerText = `현재 데미지: ${Math.floor(maxDamage_44)}`;
+                document.getElementById('optimalCombination').innerHTML = `
+                    최적 부옵(${bestCombination_44["부옵개수"]}) 조합:<br>
+                    4코옵션: ${bestCombination_44["4코옵션"]}<br>
+                    3코옵션: ${bestCombination_44["3코옵션"].join(', ')}<br>
+                    부옵션: ${JSON.stringify(bestCombination_44["부옵션"])}<br>
+                    기초공격력: ${bestCombination_44["기초공"]}<br>
+                    공격력: ${bestCombination_44["공격력"]} (${bestCombination_44["기초공"]} * ${Math.floor(1 + bestCombination_44["공격력"] / bestCombination_44["기초공"] - 1)} + ${bestCombination_44["공격력"] - bestCombination_44["기초공"]})<br>
+                    치확: ${(bestCombination_44["치확"] * 100).toFixed(2)}%<br>
+                    치피: ${(bestCombination_44["치피"] * 100).toFixed(2)}%<br>
+                    속성피증: ${(bestCombination_44["속성피증"] * 100).toFixed(2)}%<br>
+                    타입피증: ${(bestCombination_44["타입피증"] * 100).toFixed(2)}%
+    `;
+    }
+
+}
+
+
+    
+
+
+
+    
+
 </script>
 
 </body>
