@@ -867,7 +867,7 @@ function result_on(){
         }
 
         // Calculate current damage
-        atk_now = (base_atk * (1+atk_percent_now) + flat_atk_now).toFixed(0);
+        atk_now = (base_atk * (1+atk_percent_now) + flat_atk_total).toFixed(0);
         const current_damage_val = calculate_damage(base_atk, atk_percent_now, flat_atk_total, elem_bonus_now, skill_bonus_now, crit_rate_now, crit_dmg_now, skill_bonus_reduce);
 
         // Calculate new damage with relics
