@@ -26,6 +26,9 @@
             background: #ffffff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+      .input-container label {
+           text-align: right;  /* 가로(수평) 방향 중앙을 설정 */
+      }
         .input-container, .relic-container {
             display: flex;
             flex-direction: column;
@@ -174,11 +177,11 @@
         <label><span style="font-weight:bold">무기 공명 효율:&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="number" id="energy_recharge_weapon" value="0" step="0.01"></label>
         <button class="calculate-button" onclick="calculate()">Calculate</button>
       <button  class="result-button" id="result_button"onclick="result_on()" >Result</button>
-      <label><input type="checkbox" id="relic_toggle" name='calcul' onclick="toggleRelicContainer()">상단에 에코 교환창 열기</label>
-      <label><input type="checkbox" id="option_toggle" name='calcul' onclick="optionContainer()">추가 옵션창 열기</label>
-      <label><input type="checkbox" name='calcul' id="effi_cal">부옵 효율 계산</label>
-      <label><input type="checkbox" name='calcul' id="skip_calculation">최대 계산 생략[개빨라짐]</label>
-      <label><input type="checkbox" name='calcul' id="44111_check">44111 체크</label>
+      <label style="text-align:left"><input type="checkbox" id="relic_toggle" name='calcul' onclick="toggleRelicContainer()">상단에 에코 교환창 열기</label>
+      <label style="text-align:left"><input type="checkbox" id="option_toggle" name='calcul' onclick="optionContainer()">추가 옵션창 열기</label>
+      <label style="text-align:left"><input type="checkbox" name='calcul' id="effi_cal">부옵 효율 계산</label>
+      <label style="text-align:left"><input type="checkbox" name='calcul' id="skip_calculation">최대 계산 생략[개빨라짐]</label>
+      <label style="text-align:left"><input type="checkbox" name='calcul' id="44111_check">44111 체크</label>
     </div>
 
     <div class="options-container">
