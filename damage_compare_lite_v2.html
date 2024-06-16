@@ -18,33 +18,52 @@
         .container {
             display: flex;
             gap: 10px;
+          width: 90%; /* 전체 너비 */
+          flex-direction: column;
         }
-        .input-container, .options-container, .result-container, .relic-container {
-            border: 2px solid #ddd;
-            padding: 10px;
-            border-radius: 10px;
-            background: #ffffff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-      .input-container label {
-           text-align: right;  /* 가로(수평) 방향 중앙을 설정 */
+      .additional-container{
+        flex-direction: column;
+        flex:1;
       }
-        .input-container, .relic-container {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-        .input-container label span, .relic-container label span {
-            flex: 1;
-            text-align: right;
-            padding-right: 0px;
-        }
-        .input-container label input{
-            flex: 1;
-            padding: 3px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
+      .input-container, .options-container, .result-container, .relic-container{
+        border: 3px solid #ddd;
+        padding: 10px;
+        border-radius: 10px;
+        background: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .additional-container{
+        padding: 5px;
+        margin-top: 5px
+      }
+      .input-container, .relic-container{
+        display: flex;
+         flex-direction: column;
+        gap: 5px;
+        margin-bottom: 10px;
+      }
+
+      .input-container label, .relic-container label{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+      }
+
+      .input-container label span, .relic-container label span{
+        text-align: left; /* 텍스트를 좌측 정렬 */
+        flex: 1;
+      }
+      
+      .input-container label input, .relic-container label input {
+        text-align: right; /* 입력 필드를 우측 정렬 */
+        flex: 1;
+        width:100px;
+        padding: 3px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
       .options-container label input, .relic-container label input {
           flex: 1;
           padding: 3px;
@@ -65,7 +84,7 @@
         }
         button.calculate-button {
             padding: 10px 20px;
-            margin-top: 10px;
+            margin-top: 0px;
             cursor: pointer;
             background: #4CAF50;
             color: #fff;
@@ -75,7 +94,7 @@
             transition: background 0.3s ease;
         }
         button.calculate-button:hover {
-            background: #45a049;
+            background: red;
         }
       button.result-button {
           padding: 10px 20px;
@@ -91,6 +110,46 @@
       }
       button.result-button:hover {
           background: #45a049;
+      }
+      button.option-button {
+          padding: 10px 50px;
+          margin-top: 20px;
+          margin-bottom: 5px;
+          cursor: pointer;
+          background: #4CAF50;
+          color: #fff;
+          border: none;
+          border-radius: 5px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+          transition: background 0.3s ease;
+      }
+      button.option-button:hover {
+          background: #45a049;
+      }
+      button.exit-button {
+          padding: 4px 4px;
+          cursor: pointer;
+          background: #fff;
+          color: black;
+          border: none;
+          border-radius: 5px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+          transition: background 0.3s ease;
+      }
+      button.exit-button:hover {
+          background: red;
+      }
+      .checkbox-label {
+        display: flex;
+        align-items: center; /* 세로(수직) 방향 중앙 정렬 */
+      }
+
+      .checkbox-label input[type="checkbox"] {
+        margin-right: 5px; /* 체크박스 오른쪽 여백 추가 */
+      }
+
+      .checkbox-label span {
+        text-align: left; /* 텍스트 좌측 정렬 */
       }
         .relic-options {
             display: flex;
@@ -175,17 +234,17 @@
         <label><span style="font-weight:bold">무기 크리 피해:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="number" id="crit_dmg_weapon" value="0" step="0.01"></label>
         <label><span style="font-weight:bold">무기 공격 퍼센트:&nbsp;&nbsp;</span> <input type="number" id="atk_percent_weapon" value="0" step="0.01"></label>
         <label><span style="font-weight:bold">무기 공명 효율:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="number" id="energy_recharge_weapon" value="0" step="0.01"></label>
-        <button class="calculate-button" onclick="calculate()">Calculate</button>
-      <button  class="result-button" id="result_button"onclick="result_on()" >Result</button>
-      <label style="text-align:left"><input type="checkbox" id="relic_toggle" name='calcul' onclick="toggleRelicContainer()">상단에 에코 교환창 열기</label>
-      <label style="text-align:left"><input type="checkbox" id="option_toggle" name='calcul' onclick="optionContainer()">추가 옵션창 열기</label>
-      <label style="text-align:left"><input type="checkbox" name='calcul' id="effi_cal">부옵 효율 계산</label>
-      <label style="text-align:left"><input type="checkbox" name='calcul' id="skip_calculation">최대 계산 생략[개빨라짐]</label>
-      <label style="text-align:left"><input type="checkbox" name='calcul' id="44111_check">44111 체크</label>
-    </div>
+      <div class="additional-container" style="text-align: center;">
+        <button  class="option-button" id="relic_toggle" onclick="toggleRelicContainer()" style="display :inline-block;">에코 교환창</button>
+        <button  class="option-button" id="option_toggle" onclick="optionContainer()" style="display :inline-block;">추가 옵션창</button>
+        </div>
+        <button class="calculate-button" onclick="calculate()">계산 실행</button>
+      <button  class="result-button" id="result_button"onclick="result_on()" >결과창</button>
+      </div>
+
 
     <div class="options-container">
-      <h4>추가 선택 입력</h4>
+      <h4>추가 선택 입력&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button  class="exit-button" id="option_toggle" onclick="optionContainer()" style="text-align:right">X</button></h4>
       <label><span>깡공(에코 부옵):<br></span> <input type="number" id="flat_atk_now" value="0" step="0.01"></label>
       <label><span>피해 타입 딜지분(0~100%)<br></span> <input type="number" id="skill_bonus_reduce" value="100" step="0.01"></label>
       <label><span>최소 공명 효율:<br></span> <input type="number" id="energy_recharge_obj" value="100" step="0.01"></label>
@@ -204,10 +263,13 @@
       <label><input type="checkbox" id="hack_set"> 백로</label><br>
       
       <label><input type="checkbox" name='calcul' id="precise_calculation"> 정확한 최대 데미지<br>[3분이상걸림!!]</label>
+      <label style="text-align:left"><input type="checkbox" name='calcul' id="skip_calculation">최대 계산 생략[개빨라짐]<br><br></label>
+      <label style="text-align:left"><input type="checkbox" name='calcul' id="44111_check">44111 체크<br></label>
+      <label style="text-align:left"><input type="checkbox" name='calcul' id="effi_cal">부옵 효율 보기<br></label>
   </div>
 
     <div class="result-container" id="results" style="display: none;">
-        <h2>Results</h2>
+        <h3>결과</h3>
         <div>현재데미지: <span id="current_damage_val"></span></div>
         <div>최대데미지: <span id="max_damage"></span></div>
         <div><b>현재/최대 데미지: <span id="damage_ratio"></span>%</b></div>
@@ -217,8 +279,8 @@
 
         <div class="class" id="status"></div>
         <div>에코 변경시 데미지: <span id="new_damage_val"></span> (<span id="damage_change"></span>%)</div>
+      <button  class="option-button" id="option_toggle" onclick="togglestatComparison()" style="text-align:right">스텟 비교창</button>
 
-      <label><input type="checkbox" id="stat_compare" name="stat_compare">스텟 비교창 열기</label>
     </div>
 </div>
 
@@ -233,7 +295,7 @@
 
           </div>
           <div class="stat-column">
-              <h4>변경 후</h4>
+              <h4>변경 후&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button  class="exit-button" id="option_toggle" onclick="togglestatComparison()" style="text-align:right">X</button></h4>
               <div>공격력: <span id="new_atk_val"></span></div>
               <div>크리 확률: <span id="new_crit_rate_val"></span>%</div>
               <div>크리 피해: <span id="new_crit_dmg_val"></span>%</div>
@@ -247,7 +309,8 @@
 <div class="relic-container">
   <div class="relic-options-container">
     <div class="relic-options">
-        <h2>기존 에코 작성</h2>
+      
+        <h3>기존 에코 작성</h3>
         <label><input type="checkbox" onclick="toggleItems('dec')"> 옵션 표시</label>
         <div id="dec-items-container" style="display:none;">
           <div class="item">
@@ -355,7 +418,7 @@
     </div>
 
     <div class="relic-options">
-        <h2>신규 에코 추가</h2>
+        <h3>신규 에코 추가&nbsp;&nbsp;&nbsp;&nbsp;<button  class="exit-button" id="option_toggle" onclick="toggleRelicContainer()" style="text-align:right">X</button></h3>
         <label><input type="checkbox" onclick="toggleItems('add')"> 옵션 표시</label>
         <div id="add-items-container" style="display:none;">
           <div class="item">
@@ -494,7 +557,7 @@ const relicValues = {
   function optionContainer() {
       const optionContainer = document.querySelector('.options-container');
       const checkbox = document.getElementById('option_toggle');
-      if (checkbox.checked) {
+      if (optionContainer.style.display === 'none') {
         optionContainer.style.display = 'flex';
       } else {
         optionContainer.style.display = 'none';
@@ -502,16 +565,27 @@ const relicValues = {
   }
 
 
-      function toggleRelicContainer() {
+  function toggleRelicContainer() {
       const relicContainer = document.querySelector('.relic-container');
-      const checkbox = document.getElementById('relic_toggle');
-      if (checkbox.checked) {
+      if (relicContainer.style.display === 'none') {
           relicContainer.style.display = 'flex';
       } else {
           relicContainer.style.display = 'none';
       }
   }
 
+  function togglestatComparison() {
+      const statComparison = document.getElementById('stat_comparison');
+    if (statComparison.classList.contains('hidden')) {
+      statComparison.classList.remove('hidden');
+      updateStatComparison();
+    } else {
+      statComparison.classList.add('hidden');
+    }
+
+  }
+
+  
 function toggleItems(type) {
     const container = document.getElementById(`${type}-items-container`);
     container.style.display = container.style.display === 'none' ? 'block' : 'none';
@@ -790,15 +864,7 @@ function result_on(){
 
 
  //스텟 비교창
-      document.getElementById('stat_compare').addEventListener('change', function() {
-          const statComparison = document.getElementById('stat_comparison');
-          if (this.checked) {
-              statComparison.classList.remove('hidden');
-              updateStatComparison();
-          } else {
-              statComparison.classList.add('hidden');
-          }
-      });
+
 
       function updateStatComparison() {
 
@@ -815,13 +881,7 @@ function result_on(){
 
       }
 
-      document.querySelectorAll('input').forEach(input => {
-          input.addEventListener('input', function() {
-              if (document.getElementById('stat_compare').checked) {
-                  updateStatComparison();
-              }
-          });
-      });
+
 
 
    // Simulation part
