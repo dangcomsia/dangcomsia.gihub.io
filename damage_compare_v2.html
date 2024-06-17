@@ -183,13 +183,13 @@
         <label><input type="checkbox" name='calcul' id="effi_cal"> 부옵 효율 계산</label><br>
       <label><input type="checkbox" name='calcul' id="44111_check"> 44111 체크</label><br>
       <label><input type="checkbox" id="relic_toggle" name='calcul' onclick="toggleRelicContainer()"> 에코 교환창 열기</label><br><br>
-      <label><input type="checkbox" name='calcul' id="precise_calculation"> 정확한 최대 데미지<br>[3분이상걸림!!]</label><br>
+      <label><input type="checkbox" name='calcul' id="precise_calculation"> 보다 정확한 계산<br>[3분이상걸림!!]</label><br>
       <label><input type="checkbox" name='calcul' id="skip_calculation"> 최대 데미지 계산X<br>[빨라짐]<br></label>
  
         <button onclick="showSubContainer()">최적세팅계산</button>
         <div id="sub-container">
             <div>
-                 <label><span style="opacity:0.5;">[최적 계산은 모든 옵션을 작성해야 합니다]<br></span></label>
+                 <label><span style="opacity:0.5;">[최적 계산은 "모든" 항목 작성 필요]<br></span></label>
                 <label><span>부옵 개수 설정<br></span> <input type="number" id="substat_count" value="0" step="1"></label>
             </div>
             <button onclick="calculate_sub()">최적계산실행</button>
