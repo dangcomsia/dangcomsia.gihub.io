@@ -172,6 +172,12 @@
         <label><span>타입 피증 추가:<br></span> <input type="number" id="add_skill_bonus" value="0" step="0.01"></label><br>
         <label><span>치명 확률 추가:<br></span> <input type="number" id="add_crit_rate" value="0" step="0.01"></label><br>
         <label><span>치명 피해 추가:<br></span> <input type="number" id="add_crit_dmg" value="0" step="0.01"></label>
+        
+              <label><span style="font-weight:bold"><br><br>스킬스텟추가<br></span></label>
+      <label><input type="checkbox" id="elem_skill"> 속성</label>
+      <label><input type="checkbox" id="critper_skill"> 크확</label><br>
+      <label><input type="checkbox" id="critdmg_skill"> 크피</label>
+      <label><input type="checkbox" id="atkper_skill"> 공퍼</label><br>
       
         <h4>에코 버프 효과</h4>
         <label><input type="checkbox" id="my_set"> 본인 에코 버프</label><br>
@@ -190,11 +196,6 @@
         <div id="sub-container">
             <div>
                  <label><span style="opacity:0.5;">[최적 계산은 "모든" 항목 작성 필요]<br></span></label>
-              <label><span>스킬스텟추가<br></span></label>
-              <label><input type="checkbox" id="elem_skill"> 속성</label>
-              <label><input type="checkbox" id="critper_skill"> 크확</label><br>
-              <label><input type="checkbox" id="critdmg_skill"> 크피</label>
-              <label><input type="checkbox" id="atkper_skill"> 공퍼</label><br>
                 <label><span>부옵 개수 설정<br></span> <input type="number" id="substat_count" value="0" step="1"></label>
             </div>
             <button onclick="calculate_sub()">최적계산실행</button>
