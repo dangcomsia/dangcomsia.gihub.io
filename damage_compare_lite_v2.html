@@ -270,8 +270,15 @@
         <button class="option-button" id="sub_toggle" onclick="showSubContainer()">최적세팅계산</button>
         <div id="sub-container">
             <div>
-              <span style="opacity: 0.5;">모든 항목 작성 필요<br></span><span>[부옵 개수 설정]<br></span><input type="number" id="substat_count" value="0" step="1">
+              <span style="opacity: 0.5;">모든 항목 작성 필요</span> <button  class="exit-button" id="sub_toggle" onclick="showSubContainer()" style="text-align:right">X<br></button>
+                              <label><span>스텟스킬추가<br></span></label>
+              <label><input type="checkbox" id="elem_skill"> 속성</label>
+              <label><input type="checkbox" id="critper_skill"> 크확</label><br>
+              <label><input type="checkbox" id="critdmg_skill"> 크피</label>
+              <label><input type="checkbox" id="atkper_skill"> 공퍼</label><br>
+                <span>[부옵 개수 설정]<br></span><input type="number" id="substat_count" value="0" step="1">
             </div><br>
+            
             <button class="calculate-button" onclick="calculate_sub()">최적계산실행</button><br>
             <div class="results">
                 <h4>최적계산결과</h4>
@@ -1094,6 +1101,19 @@ updateStatComparison();
              flat_atk += 50;
              atk_percent -= 0.18;
            } 
+                   if (document.getElementById('elem_skill').checked) {
+          elem_bonus += 0.12;
+        } 
+        if (document.getElementById('critper_skill').checked) {
+          crit_rate += 0.8;
+        } 
+        if (document.getElementById('critdmg_skill').checked) {
+          crit_dmg += 0.16;
+        } 
+        if (document.getElementById('atkper_skill').checked) {
+          atk_percent += 0.12;
+        } 
+
 console.log(base_atk, skill_bonus_reduce, flat_atk ,
            crit_rate 
            , crit_dmg 
@@ -1185,23 +1205,23 @@ console.log(base_atk, skill_bonus_reduce, flat_atk ,
 
       const damage_43 = calculate_damage(base_atk, currentAtkPercent, currentFlatAtk, currentElemBonus, currentSkillBonus, currentCritRate, currentCritDmg, skill_bonus_reduce);
 
-                      if (damage_43 > maxDamage_43) {
-                          maxDamage_43 = damage_43;
-                          bestCombination_43 = {
-                              "4코옵션": selectedCo4 ? selectedCo4 : `${selectedCo4} 2개`,
-                              "3코옵션": selectedCo3,
-                              "부옵션": subOptionCounts,
-                              "기초공": base_atk,
-                              "공격력": Math.floor(base_atk * (1 + currentAtkPercent) + currentFlatAtk),
-                              "치확": currentCritRate,
-                              "치피": currentCritDmg,
-                              "속성피증": currentElemBonus,
-                              "타입피증": currentSkillBonus,
-                              "부옵개수": subOptionCount
-                          };
-                      }
-                  }
-
+                    if (damage_43 > maxDamage_43) {
+                        maxDamage_43 = damage_43;
+                        bestCombination_43 = {
+                            "4코옵션": selectedCo4 ? selectedCo4 : `${selectedCo4} 2개`,
+                            "3코옵션": selectedCo3,
+                            "부옵션": subOptionCounts,
+                            "기초공": base_atk,
+                            "공격력": Math.floor(base_atk * (1 + currentAtkPercent) + currentFlatAtk),
+                          "공퍼":currentAtkPercent,
+                            "치확": currentCritRate,
+                            "치피": currentCritDmg,
+                            "속성피증": currentElemBonus,
+                            "타입피증": currentSkillBonus,
+                            "부옵개수": subOptionCount
+                        };
+                    }
+                }
 
 
 
@@ -1256,59 +1276,61 @@ console.log(base_atk, skill_bonus_reduce, flat_atk ,
 
       const damage_44 = calculate_damage(base_atk, currentAtkPercent, currentFlatAtk, currentElemBonus, currentSkillBonus, currentCritRate, currentCritDmg, skill_bonus_reduce);
 
-                      if (damage_44 > maxDamage_44) {
-                          maxDamage_44 = damage_44;
-                          bestCombination_44 = {
-                              "4코옵션": selectedCo4 ? selectedCo4 : `${selectedCo4} 2개`,
-                              "3코옵션": selectedCo3,
-                              "부옵션": subOptionCounts,
-                              "기초공": base_atk,
-                              "공격력": Math.floor(base_atk * (1 + currentAtkPercent) + currentFlatAtk),
-                              "치확": currentCritRate,
-                              "치피": currentCritDmg,
-                              "속성피증": currentElemBonus,
-                              "타입피증": currentSkillBonus,
-                              "부옵개수": subOptionCount
-                          };
-                      }
-                  }
+                    if (damage_44 > maxDamage_44) {
+                        maxDamage_44 = damage_44;
+                        bestCombination_44 = {
+                            "4코옵션": selectedCo4 ? selectedCo4 : `${selectedCo4} 2개`,
+                            "3코옵션": selectedCo3,
+                            "부옵션": subOptionCounts,
+                            "기초공": base_atk,
+                            "공격력": Math.floor(base_atk * (1 + currentAtkPercent) + currentFlatAtk),
+                            "공퍼":currentAtkPercent,
+                            "치확": currentCritRate,
+                            "치피": currentCritDmg,
+                            "속성피증": currentElemBonus,
+                            "타입피증": currentSkillBonus,
+                            "부옵개수": subOptionCount
+                        };
+                    }
+                }
 
 
-      if (maxDamage_43 >= maxDamage_44){
-                  document.getElementById('damage').innerText = `44111 < ["43311" 최대데미지: ${Math.floor(maxDamage_43)}]`;
-                  document.getElementById('damage_com').innerText = `44111 최대데미지: ${Math.floor(maxDamage_44)}(백분율:${(maxDamage_44/maxDamage_43).toFixed(2) * 100}%)`;
-                  document.getElementById('optimalCombination').innerHTML = `
-                      최적 부옵(${bestCombination_43["부옵개수"]}) 조합:<br>
-                      4코옵션: ${bestCombination_43["4코옵션"]}<br>
-                      3코옵션: ${bestCombination_43["3코옵션"].join(', ')}<br>
-                      부옵션: ${JSON.stringify(bestCombination_43["부옵션"])}<br>
-                      기초공격력: ${bestCombination_43["기초공"]}<br>
-                      공격력: ${bestCombination_43["공격력"]} (${bestCombination_43["기초공"]} * ${Math.floor(1 + bestCombination_43["공격력"] / bestCombination_43["기초공"] - 1)} + ${bestCombination_43["공격력"] - bestCombination_43["기초공"]})<br>
-                      치확: ${(bestCombination_43["치확"] * 100).toFixed(2)}%<br>
-                      치피: ${(bestCombination_43["치피"] * 100).toFixed(2)}%<br>
-                      속성피증: ${(bestCombination_43["속성피증"] * 100).toFixed(2)}%<br>
-                      타입피증: ${(bestCombination_43["타입피증"] * 100).toFixed(2)}%
-                  `;
-              }
-      else if (maxDamage_44 >= maxDamage_43) {
-                  document.getElementById('damage').innerText = `43311 < ["44111" 최대데미 ${Math.floor(maxDamage_44)}]`;
-                  document.getElementById('damage_com').innerText = `43311 최대데미지: ${Math.floor(maxDamage_43)}(백분율:${(maxDamage_43/maxDamage_44).toFixed(2) * 100}%)`;
-                  document.getElementById('damage_44').innerText = `현재 데미지: ${Math.floor(maxDamage_44)}`;
-                  document.getElementById('optimalCombination').innerHTML = `
-                      최적 부옵(${bestCombination_44["부옵개수"]}) 조합:<br>
-                      4코옵션: ${bestCombination_44["4코옵션"]}<br>
-                      3코옵션: ${bestCombination_44["3코옵션"].join(', ')}<br>
-                      부옵션: ${JSON.stringify(bestCombination_44["부옵션"])}<br>
-                      기초공격력: ${bestCombination_44["기초공"]}<br>
-                      공격력: ${bestCombination_44["공격력"]} (${bestCombination_44["기초공"]} * ${Math.floor(1 + bestCombination_44["공격력"] / bestCombination_44["기초공"] - 1)} + ${bestCombination_44["공격력"] - bestCombination_44["기초공"]})<br>
-                      치확: ${(bestCombination_44["치확"] * 100).toFixed(2)}%<br>
-                      치피: ${(bestCombination_44["치피"] * 100).toFixed(2)}%<br>
-                      속성피증: ${(bestCombination_44["속성피증"] * 100).toFixed(2)}%<br>
-                      타입피증: ${(bestCombination_44["타입피증"] * 100).toFixed(2)}%
+    if (maxDamage_43 >= maxDamage_44){
+                document.getElementById('damage').innerText = `44111 < ["43311" 최대데미지: ${Math.floor(maxDamage_43)}]`;
+                document.getElementById('damage_com').innerText = `44111 최대데미지: ${Math.floor(maxDamage_44)}(백분율:${(maxDamage_44/maxDamage_43).toFixed(2) * 100}%)`;
+                document.getElementById('optimalCombination').innerHTML = `
+                    43311 최적 부옵(${bestCombination_43["부옵개수"]}) 조합:<br>
+                    4코옵션: ${bestCombination_43["4코옵션"]}<br>
+                    3코옵션: ${bestCombination_43["3코옵션"].join(', ')}<br>
+                    부옵션: ${JSON.stringify(bestCombination_43["부옵션"])}<br>
+                    기초공격력: ${bestCombination_43["기초공"]}<br>
+                    공격력: ${bestCombination_43["공격력"]} (${bestCombination_43["기초공"]} * ${(1+bestCombination_43["공퍼"]).toFixed(2)} + ${Math.floor(bestCombination_43["공격력"] - (bestCombination_43["기초공"]*bestCombination_43["공퍼"]))})<br>
+
+                    치확: ${(bestCombination_43["치확"] * 100).toFixed(2)}%<br>
+                    치피: ${(bestCombination_43["치피"] * 100).toFixed(2)}%<br>
+                    속성피증: ${(bestCombination_43["속성피증"] * 100).toFixed(2)}%<br>
+                    타입피증: ${(bestCombination_43["타입피증"] * 100).toFixed(2)}%
+                `;
+            }
+    else if (maxDamage_44 >= maxDamage_43) {
+      document.getElementById('damage').innerText = `43311 < ["44111" 최대데미지: ${Math.floor(maxDamage_44)}]`;
+      document.getElementById('damage_com').innerText = `43311 최대데미지: ${Math.floor(maxDamage_43)}(백분율:${(maxDamage_43/maxDamage_44).toFixed(2) * 100}%)`;
+      document.getElementById('optimalCombination').innerHTML = `
+          44111 최적 부옵(${bestCombination_44["부옵개수"]}) 조합:<br>
+          4코옵션: ${bestCombination_44["4코옵션"]}<br>
+          3코옵션: ${bestCombination_44["3코옵션"].join(', ')}<br>
+          부옵션: ${JSON.stringify(bestCombination_44["부옵션"])}<br>
+          기초공격력: ${bestCombination_44["기초공"]}<br>
+          공격력: ${bestCombination_44["공격력"]} (${bestCombination_44["기초공"]} * ${(1+bestCombination_44["공퍼"]).toFixed(2)} + ${Math.floor(bestCombination_44["공격력"] - (bestCombination_44["기초공"]*bestCombination_44["공퍼"]))})<br>
+
+          치확: ${(bestCombination_44["치확"] * 100).toFixed(2)}%<br>
+          치피: ${(bestCombination_44["치피"] * 100).toFixed(2)}%<br>
+          속성피증: ${(bestCombination_44["속성피증"] * 100).toFixed(2)}%<br>
+          타입피증: ${(bestCombination_44["타입피증"] * 100).toFixed(2)}%
       `;
       }
 
-  }
+}
 
 
 
