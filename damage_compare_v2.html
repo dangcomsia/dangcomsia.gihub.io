@@ -881,9 +881,7 @@ flat_atk = 350;
     const co4_options = ["공퍼", "치확", "치피"];
     const co3_options = ["공퍼", "속성피증", "공명효율"];
 
-
-    for (let i = 0; i < counts; i++) {
-        if (document.getElementById('elem_skill').checked) {
+            if (document.getElementById('elem_skill').checked) {
           elem_bonus += 0.12;
         } 
         if (document.getElementById('critper_skill').checked) {
@@ -895,6 +893,9 @@ flat_atk = 350;
         if (document.getElementById('atkper_skill').checked) {
           atk_percent += 0.12;
         } 
+
+
+    for (let i = 0; i < counts; i++) {
         // Initialize base stat in for
         let flat_atk_tem = flat_atk;
         let crit_rate_tem = crit_rate;
@@ -1031,18 +1032,6 @@ flat_atk = 350;
            flat_atk += 50;
            atk_percent -= 0.18;
          } 
-                 if (document.getElementById('elem_skill').checked) {
-          elem_bonus += 0.12;
-        } 
-        if (document.getElementById('critper_skill').checked) {
-          crit_rate += 0.8;
-        } 
-        if (document.getElementById('critdmg_skill').checked) {
-          crit_dmg += 0.16;
-        } 
-        if (document.getElementById('atkper_skill').checked) {
-          atk_percent += 0.12;
-        } 
 
 
           const calculate_damage = (base_atk, atk_percent, flat_atk, elem_bonus, skill_bonus, crit_rate, crit_dmg, skill_bonus_reduce) => {
