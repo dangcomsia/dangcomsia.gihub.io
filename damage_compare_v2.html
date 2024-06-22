@@ -609,7 +609,7 @@ function toggleItems(type) {
 
     const calculate_damage = (base_atk, atk_percent, flat_atk, elem_bonus, skill_bonus, crit_rate, crit_dmg, skill_bonus_reduce) => {
         let total_atk = base_atk * (1 + atk_percent) + flat_atk;
-        if (crit_rate_now <= 1) {
+        if (crit_rate <= 1) {
             return total_atk * (1 + elem_bonus + skill_bonus * skill_bonus_reduce) * (crit_rate * crit_dmg + 1 - crit_rate) / 2;
         } else {
             return total_atk * (1 + elem_bonus + skill_bonus * skill_bonus_reduce) * (crit_dmg) / 2;
