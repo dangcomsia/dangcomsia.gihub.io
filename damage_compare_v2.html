@@ -843,6 +843,14 @@ flat_atk = 350;
               statComparison.classList.add('hidden');
           }
       });
+
+                if (document.getElementById('stat_compare').checked){
+        document.getElementById('stat_comparison').classList.add('hidden');
+        document.getElementById('stat_compare').checked = false;
+            updateStatComparison();
+            document.getElementById('stat_comparison').classList.remove('hidden');
+            document.getElementById('stat_compare').checked = true;
+        }
         console.log("총공격력_after",atk_now);
       function updateStatComparison() {
 
